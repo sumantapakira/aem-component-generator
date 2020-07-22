@@ -1,0 +1,605 @@
+//
+// ADOBE CONFIDENTIAL
+// __________________
+//
+//  Copyright 2012 Adobe Systems Incorporated
+//  All Rights Reserved.
+//
+// NOTICE:  All information contained herein is, and remains
+// the property of Adobe Systems Incorporated and its suppliers,
+// if any.  The intellectual and technical concepts contained
+// herein are proprietary to Adobe Systems Incorporated and its
+// suppliers and are protected by trade secret or copyright law.
+// Dissemination of this information or reproduction of this material
+// is strictly forbidden unless prior written permission is obtained
+// from Adobe Systems Incorporated.
+// --------------------------------------------------------------------
+
+#main-content-panel {
+  padding: 1.5rem;
+}
+
+// TODO should come from coral.
+body {
+  font-family: adobe-clean, Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-size: 0.8125rem;
+  line-height: 1rem;
+  font-style: normal;
+  color: #4b4b4b;
+}
+
+.endor-Panel-content {
+  overflow-y: hidden;
+}
+
+/* Draggables dynamically attached to body */
+body > .field,
+#formbuilder-field-templates .field {
+  width: 100%;
+  -webkit-box-shadow: 0 0.09375rem 0.09375rem rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0 0.09375rem 0.09375rem rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0.09375rem 0.09375rem rgba(0, 0, 0, 0.25);
+  background-color: #fbfbfb;
+  margin: 0.5rem 0;
+  max-width: 40.0rem;
+  list-style: none;
+  padding: 0.5rem;
+
+  :hover {
+    cursor: pointer;
+  }
+}
+
+.formbuilder-template-title {
+  > coral-icon:before {
+    color: #ffffff;
+    opacity: 1;
+  }
+
+  > coral-icon {
+    vertical-align: middle;
+    /*height: 2.0rem ;*/
+    background: #c0c0c0;
+    font-size: 1.5rem;
+    padding: 0.5rem 0.625rem 0.5rem 0.625rem;
+  }
+
+  > span {
+    margin-left: 1rem;
+  }
+}
+
+.formbuilder-wrapper {
+  position: relative;
+  top: 0;
+  left: 0;
+  max-height: 100%;
+  height: 100%;
+  background-color: #e6e6e6;
+
+  /*Should come from coral*/
+  .coral-InputGroup {
+    width: 100%;
+  }
+
+  #formbuilder-field-templates {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .formbuilder-content-form,
+  .formbuilder-content-properties,
+  .formbuilder-content-properties-rules {
+    display: none;
+  }
+
+  .ui-sortable-placeholder {
+    visibility: visible !important;
+    height: 2.5rem;
+    border: 1px #aaaaaa dashed !important;
+    border-color: rgba(0, 35, 65, 0.7);
+    background-color: rgba(66, 134, 207, 0.2);
+    color: white;
+  }
+
+  input[type=text],
+  input[type=password],
+  input[type=email],
+  input[type=url],
+  input[type=tel],
+  input[type=number],
+  textarea {
+    width: 100%;
+  }
+
+  input[type=number] {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 0;
+    font-size: 0.8125rem;
+    font-family: AdobeClean;
+    padding: 0.25rem 0.5rem;
+    margin: 0.5rem 0;
+    border: 0.0625rem solid #bbbbbb;
+    background-color: #ffffff;
+  }
+
+  input[type=number]:focus {
+    -webkit-box-shadow: 0 0 0.375rem #377eaf;
+    -moz-box-shadow: 0 0 0.375rem #377eaf;
+    box-shadow: 0 0 0.375rem #377eaf;
+    border: 0.0625rem solid #6a8bc4;
+    outline: none;
+  }
+
+  .temp-wrapper {
+    min-width: 61.250rem;
+  }
+
+  .panel {
+    padding: 1rem;
+    margin: 0.75rem 0 0 0;
+    background: #fbfbfb;
+    border: 0.0625rem solid #bbbbbb;
+    -webkit-box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+  }
+
+  .form-left {
+    margin-right: 20rem;
+    overflow-y: auto;
+    height: 100%;
+    #tabs-navigation a[data-toggle="tab"] {
+      padding-right: 0;
+
+      i {
+        font-size: 0.5rem;
+        padding-right: 1rem;
+        padding-left: 0.5rem;
+        /*vertical-align: middle;*/
+      }
+    }
+
+    input[type=text],
+    input[type=password],
+    input[type=email],
+    input[type=url],
+    input[type=tel],
+    input[type=number],
+    button,
+    textarea {
+      pointer-events: none;
+    }
+
+    #formbuilder-add-tab {
+      padding-left: 0;
+    }
+
+    .master-fields {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      margin-bottom: 0.5rem;
+
+      overflow: hidden;
+
+      .formbuilder-content-form {
+        display: block;
+
+        .fieldtype {
+          float: right;
+          color: #6487c3;
+
+          i {
+            vertical-align: middle;
+            font-size: .5rem;
+            padding: 0.375rem;
+          }
+        }
+      }
+
+      .field {
+        position: relative;
+        border: 1px transparent solid;
+        padding: 0.5rem;
+        -moz-opacity: 0.9;
+        -webkit-opacity: 0.9;
+        opacity: 0.9;
+        -ms-filter: ~"progid:DXImageTransform.Microsoft.Alpha(opacity=90)";
+        filter: ~"alpha(opacity=90)";
+      }
+
+      .field:after {
+        content:"";
+        position:absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        right: 0;
+        background-color: transparent;
+      }
+
+      .ui-selecting,
+      .ui-selected,
+      .selected-field {
+        border-color: rgba(0, 35, 65, 0.7);
+        background-color: rgba(66,134,207, .8);
+        color: white;
+      }
+    }
+
+    .form-fields {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      min-height: 10.0rem;
+
+      .formbuilder-content-form {
+        display: block;
+
+        .fieldtype {
+          float: right;
+          color: #6487c3;
+
+          i {
+            vertical-align: middle;
+            font-size: .5rem;
+            padding: 0.375rem;
+          }
+        }
+      }
+
+      .ui-selecting,
+      .ui-selected,
+      .selected-field {
+        color: rgb(75, 75, 75);
+        background-image: -webkit-linear-gradient(-45deg, transparent, transparent 48%, #cfcfcf 48%, #cfcfcf 52%, transparent 52%, transparent);
+        background-image: -moz-linear-gradient(-45deg, transparent, transparent 48%, #cfcfcf 48%, #cfcfcf 52%, transparent 52%, transparent);
+        background-image: -ms-linear-gradient(-45deg, transparent, transparent 48%, #cfcfcf 48%, #cfcfcf 52%, transparent 52%, transparent);
+        background-image: -o-linear-gradient(-45deg, transparent, transparent 48%, #cfcfcf 48%, #cfcfcf 52%, transparent 52%, transparent);
+        background-image: linear-gradient(-45deg, transparent, transparent 48%, #cfcfcf 48%, #cfcfcf 52%, transparent 52%, transparent);
+        -webkit-background-size: 0.375rem;
+        -moz-background-size: 0.375rem;
+        -o-background-size: 0.375rem;
+        background-size: 0.375rem;
+        -webkit-background-size: 0.375rem 0.375rem;
+        -moz-background-size: 0.375rem 0.375rem;
+        background-size: 0.375rem 0.375rem;
+      }
+    }
+  }
+
+  .form-fields .is-selected {
+     border: 2px solid;
+   }
+
+  .editor-right {
+    float:right;
+    width:20rem;
+    height: 100%;
+  }
+
+  .delete-field {
+    display: block;
+    font-size: 3rem;
+    line-height: 5rem;
+    background: #ffffff;
+    border-radius: 50%;
+    height: 5rem;
+    width: 5rem;
+    margin: 1rem auto;
+    text-align: center;
+    cursor: pointer;
+
+    :before {
+      color: #cbcbcb;
+    }
+
+    :hover:before {
+      color: #a8a8a8;
+    }
+  }
+
+  #field-edit {
+    label {
+      margin: 0.75rem 0.75rem 0 0;
+      width: 100%;
+      vertical-align: top;
+      display: inline-block;
+
+      > span:first-child {
+        display: block;
+        font-size: 1rem;
+      }
+
+      > input:not([type="checkbox"]),
+      > textarea {
+        border: 1px solid #bbbbbb;
+        width: 100%;
+      }
+
+      > textarea {
+        max-width: 100%;
+      }
+
+    }
+
+    // TODO Not Compatible with all target browsers
+    .column2  {
+      -webkit-column-count: 2;
+    }
+
+    .placeholder {
+      text-align: center;
+      margin: 1rem 1.5rem 1rem 1rem;
+    }
+  }
+  /*CQ-35634 Fix Padding for Labels on Datepicker and select dropdown */
+  .coral-Form-fieldlabel{
+    & + coral-datepicker {padding-top:12px;}
+    & + coral-select {padding-top:12px;}
+  }
+  #tabs-navigation > nav {
+    padding-left: 1rem;
+  }
+
+  .dropdown-options {
+    padding-top: 0.25rem;
+    width: 100%;
+
+    > tbody > tr {
+      > td {
+        padding: 0.125rem;
+      }
+
+      > td:nth-child(1) {
+        width: 1.75rem;
+      }
+
+      > td:nth-child(3), > td:nth-child(4) {
+        width: 1.75rem;
+      }
+    }
+
+    input[type=text] {
+      margin: 0;
+      width: 100%;
+    }
+  }
+
+  .dropdown-option {
+      > td {
+        padding: 0.125rem;
+      }
+
+      > td:nth-child(2) {
+        width: 13rem;
+      }
+    }
+  }
+
+  .conjusted {
+    padding: 0rem;
+  }
+
+  .choice-radio-div {
+    padding: 1rem;
+  }
+
+  #default-option-tag.hidden {
+    visibility: hidden;
+  }
+
+  .append-dropdown-td {
+    float: left;
+    margin-top: 1rem;
+    border: none !important;
+    background: none !important;
+  }
+
+  .append-dropdown-option {
+    float: right;
+  }
+
+  .default-option-tag {
+    cursor: pointer;
+  }
+
+  .dropdown-option {
+    height: 5.2rem;
+  }
+
+  .dropdown-option > td {
+    background: none !important;
+    border: none !important;
+  }
+  .dropdown-option a {
+    overflow: hidden;
+    display: inline-block;
+    width: 1.8750rem;
+    height: 1.8750rem;
+    line-height: 1.8750rem;
+    font-size: 1.0rem;
+    text-align: center;
+    vertical-align: text-top;
+    cursor: pointer;
+    text-shadow: none;
+  }
+
+  .dropdown-option a.icon-add {
+    margin-bottom: 0.85rem;
+  }
+
+  .formbuilder-content-form {
+    input:not([type="checkbox"]),
+    .dropdown,
+    .dropdown-container,
+    .dropdown button {
+    }
+
+    span:first-child {
+      display: block;
+      font-size: 1rem;
+    }
+  }
+
+  .section-header h3 {
+    margin-top: 2rem;
+  }
+
+.formbuilder-wrapper {
+  .form-left {
+    margin-right: 20rem;
+
+    .tabs {
+      float: left;
+      width: 100%;
+    }
+  }
+
+  .formbuilder-content-form {
+    .dropdown {
+      button {
+      }
+    }
+  }
+}
+
+.formbuilder-tab-section .panel {
+
+  overflow: hidden;
+  overflow-y: auto;
+
+  .column {
+    float: left;
+    margin: 0;
+    width: 33%;
+    min-height: 10rem;
+    /*border: 1px dotted #bfbfbf;*/
+
+    > ol > li {
+      height: 6rem;
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+  }
+}
+
+.formbuilder-tab-anchor .button {
+  vertical-align: middle;
+  padding-left: 0.15rem;
+}
+
+form.vertical label.fieldlabel,
+form.aligned label.fieldlabel {
+  color: #4b4b4b;
+}
+
+#tabs-navigation {
+  .dam-schemeditor-panel-navigation > .formbuilder-tab-anchor.is-active {
+    background-color: #fbfbfb;
+    border: .0625rem solid rgba(0,0,0,0.15);
+    border-bottom: none;
+    padding: .625rem .9375rem .625rem .9375rem;
+  }
+
+  .dam-schemeditor-panel-navigation > .formbuilder-tab-anchor {
+    border: .0625rem solid rgba(0,0,0,0.15);
+    margin: 0 !important;
+    border-bottom: none;
+    padding: 0.625rem 0.9375rem;
+  }
+
+  .dam-schemaeditor-panel-content {
+    border: none;
+    background-color: #fbfbfb;
+  }
+
+  label.fieldtype {
+    color: #4b4b4b;
+
+    >i {
+      position: relative;
+      top: -2px;
+    }
+  }
+
+  .coral-Form-fieldlabel {
+    line-height: inherit;
+  }
+}
+
+#formbuilder-add-tab {
+  border: none !important;
+  min-width: 0 !important;
+}
+
+#formbuilder-tab-name {
+    margin: 1rem;
+}
+
+#field-add {
+  margin: 1rem;
+}
+
+#tabs-navigation-1 {
+  margin-left: 1rem;
+}
+
+legend {
+  display: block !important;
+}
+
+.formbuilder-content-form  coral-icon[icon='infoCircle'] {
+  visibility: hidden;
+}
+
+.rules-label {
+  font-weight: bold;	
+}
+
+.default-option-radio {
+  font-size: 0.7rem;
+  margin-top: 1px;
+}
+
+.close-tab-button {
+  padding-left: 0.3rem;
+  padding-right: 0.5rem;
+}
+
+#schema-editor-settings-alert button {
+  margin: -0.6rem -0.5rem;
+}
+
+.add-from-json {
+  &-wrapper {
+    display: flex;
+    margin-bottom: 16px;
+  }
+  &-field {
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+  &-btn {
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-left: 5px;
+  }
+  &-error {
+    width: 100%;
+
+    coral-alert[size="S"] &-btn {
+      position: relative;
+      left: 8px;
+      float: right;
+    }
+
+    coral-alert[size="L"] &-btn {
+      text-align: right;
+    }
+  }
+}

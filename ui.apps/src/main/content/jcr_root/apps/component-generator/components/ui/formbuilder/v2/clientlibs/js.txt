@@ -1,0 +1,10 @@
+/libs/granite/ui/components/foundation/form/formbuilder/clientlibs/js/jquery-ui-custom.patched.js
+js/main.js
+js/field-properties.js
+js/formdetails.js
+js/multifield.js
+#js/dropdown.js
+#js/draganddrop.js
+#js/cascadingschema/cascadingcommons.js
+#js/cascadingschema/cascade.js
+#js/add-from-json.js

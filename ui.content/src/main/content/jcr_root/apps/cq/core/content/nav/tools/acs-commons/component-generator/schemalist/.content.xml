@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:rep="internal"
+    jcr:mixinTypes="[rep:AccessControllable]"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        jcr:primaryType="nt:unstructured"
+        jcr:title="AEM Component generator"
+        sling:resourceType="granite/ui/components/shell/collectionpage"
+        consoleId="aem-component-generator"
+        contentPath="${param.formPath}"
+        currentView="list"
+        modeGroup="aem-assets-profiles-childpages"
+        pageURITemplate="/apps/cq/core/content/nav/tools/acs-commons/component-generator/schemalist{+id}?formPath=${param.formPath}&amp;pickable=${param.pickable}"
+        targetCollection=".aem-assets-schemaeditor-list">
+        <head jcr:primaryType="nt:unstructured">
+            <clientlibs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/includeclientlibs"
+                categories="[granite.utils,granite.shared,dam.gui.coral.schemaeditor,component.generator.settings,dam.gui.coral.metadataform.copy]"/>
+        </head>
+        <redirector
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="dam/gui/coral/components/commons/contentchecker/container">
+            <items jcr:primaryType="nt:unstructured">
+                <contentchecker1
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="component-generator/components/ui/contentchecker"
+                    vanity="/apps/cq/core/content/nav/tools/acs-commons/component-generator/schemalist.html"/>
+            </items>
+        </redirector>
+        <title
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="dam/gui/coral/components/admin/schemaforms/title"/>
+        <views jcr:primaryType="nt:unstructured">
+            <list
+                granite:rel="aem-assets-schemaeditor-list"
+                jcr:primaryType="nt:unstructured"
+                jcr:title="List View"
+                sling:resourceType="granite/ui/components/coral/foundation/table"
+                icon="viewList"
+                layoutId="list"
+                limit="{Long}40"
+                metaPath="${requestPathInfo.resourcePath}"
+                metaResourceType="component-generator/components/ui/meta"
+                modeGroup="aem-assets-profiles-childpages"
+                path="${requestPathInfo.suffix}"
+                selectionCount="multiple"
+                selectionMode="row"
+                size="${empty requestPathInfo.selectors[1] ? &quot;40&quot; : requestPathInfo.selectors[1]}"
+                src="/apps/cq/core/content/nav/tools/acs-commons/component-generator/schemalist/jcr:content/views/list{.offset,limit}.html{+id}?formPath=${param.formPath}">
+                <columns jcr:primaryType="nt:unstructured">
+                    <select
+                        jcr:primaryType="nt:unstructured"
+                        select="{Boolean}true"/>
+                    <title
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Title"/>
+                </columns>
+                <datasource
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="component-generator/components/ui/pagedatasource"
+                    itemResourceType="component-generator/components/ui/childform"
+                    limit="${empty requestPathInfo.selectors[1] ? &quot;41&quot; : requestPathInfo.selectors[1] + 1}"
+                    offset="${requestPathInfo.selectors[0]}"/>
+            </list>
+        </views>
+        <actions jcr:primaryType="nt:unstructured">
+            <primary jcr:primaryType="nt:unstructured">
+                <settings
+                    granite:rel="schemaeditor-add-form"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/collection/action"
+                    action="foundation.dialog"
+                    activeSelectionCount="none"
+                    hideText="{Boolean}false"
+                    target=".aem-assets-schemaeditor-list"
+                    text="Settings"
+                    variant="primary">
+                    <data
+                        jcr:primaryType="nt:unstructured"
+                        src.template="/apps/cq/core/content/nav/tools/acs-commons/component-generator/schemalist/dialogs/setting.html"/>
+                </settings>
+            </primary>
+            <secondary jcr:primaryType="nt:unstructured">
+                <addform
+                    granite:rel="schemaeditor-add-form"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/collection/action"
+                    action="foundation.dialog"
+                    activeSelectionCount="none"
+                    hideText="{Boolean}false"
+                    target=".aem-assets-schemaeditor-list"
+                    text="Create"
+                    variant="primary">
+                    <granite:rendercondition
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/renderconditions/and">
+                        <priviledgecondition
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="dam/gui/coral/components/commons/renderconditions/haspermissions"
+                            path="${param.formPath}"
+                            privileges="[add_node,modify_property,add_property]"/>
+                        <requestflag
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/renderconditions/simple"
+                            expression="${empty param.pickable ? &quot;true&quot; : &quot;false&quot;}"/>
+                    </granite:rendercondition>
+                    <data
+                        jcr:primaryType="nt:unstructured"
+                        src.template="/apps/cq/core/content/nav/tools/acs-commons/component-generator/schemalist/dialogs/create.html?formPath=${param.formPath}"/>
+                </addform>
+            </secondary>
+            <selection jcr:primaryType="nt:unstructured">
+                <pickschema
+                    granite:rel="schemaeditor-pick"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/collection/action"
+                    action="foundation.link"
+                    activeSelectionCount="single"
+                    icon="checkCircle"
+                    target=".aem-assets-schemaeditor-list"
+                    text="Pick"
+                    variant="actionBar">
+                    <granite:rendercondition
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/coral/foundation/renderconditions/and">
+                        <priviledgecondition
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="dam/gui/coral/components/commons/renderconditions/haspermissions"
+                            path="${param.formPath}"
+                            privileges="[add_node,modify_property,remove_node]"/>
+                        <requestflag
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/renderconditions/simple"
+                            expression="${empty param.pickable ? &quot;false&quot; : &quot;true&quot;}"/>
+                    </granite:rendercondition>
+                    <data
+                        jcr:primaryType="nt:unstructured"
+                        href.uritemplate="${header.Referer}"/>
+                </pickschema>
+                <editform
+                    granite:rel="schemaeditor-edit-form"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/collection/action"
+                    action="foundation.link"
+                    actionConfigName="granite/ui/shell/actions/edit"
+                    activeSelectionCount="single"
+                    target=".aem-assets-schemaeditor-list"
+                    text="Configure Dialog"
+                    variant="actionBar">
+                    <data
+                        jcr:primaryType="nt:unstructured"
+                        href.uritemplate="/apps/cq/core/content/nav/tools/acs-commons/component-generator/schemadetails.html{+item}?formPath=${param.formPath}&amp;pickable=${param.pickable}"/>
+                </editform>
+            </selection>
+        </actions>
+        <header
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="granite/ui/components/coral/foundation/container">
+            <items jcr:primaryType="nt:unstructured">
+                <formselector
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="dam/gui/components/s7dam/metadataprofiles/formselector"
+                    default-form="dam/content/schemaeditors/forms/metadataprofile"/>
+            </items>
+        </header>
+    </jcr:content>
+    <dialogs jcr:primaryType="nt:unstructured">
+        <copy
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Copy Metadata Schema"
+            sling:resourceType="granite/ui/components/coral/foundation/dialog">
+            <items jcr:primaryType="nt:unstructured">
+                <form
+                    granite:id="copyprofileform"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Copy Metadata Schema"
+                    sling:resourceType="granite/ui/components/coral/foundation/form"
+                    enctype="application/x-www-form-urlencoded"
+                    method="POST"
+                    style="vertical">
+                    <items jcr:primaryType="nt:unstructured">
+                        <copyoperation
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                            ignoreData="{Boolean}true"
+                            name=":operation"
+                            value="dam.schema.copy"/>
+                        <title
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                            emptyText="Schema Form Title"
+                            name="title"
+                            text="Schema Form Title"
+                            title="Schema Form Title"/>
+                        <charset
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                            ignoreData="{Boolean}true"
+                            name="_charset_"
+                            value="UTF-8"/>
+                    </items>
+                </form>
+            </items>
+            <footer jcr:primaryType="nt:unstructured">
+                <cancel
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/button"
+                    text="Cancel">
+                    <parentConfig
+                        jcr:primaryType="nt:unstructured"
+                        close="{Boolean}true"/>
+                </cancel>
+                <submit
+                    granite:id="copyprofile-submit"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/button"
+                    disabled="{Boolean}true"
+                    formId="copyprofileform"
+                    text="Copy"
+                    type="submit"
+                    variant="primary">
+                    <parentConfig
+                        jcr:primaryType="nt:unstructured"
+                        close="{Boolean}true"/>
+                </submit>
+            </footer>
+        </copy>
+        <create
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Create Component"
+            sling:resourceType="granite/ui/components/coral/foundation/dialog">
+            <items jcr:primaryType="nt:unstructured">
+                <form
+                    granite:id="component-generator-form"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Create Component"
+                    sling:resourceType="granite/ui/components/coral/foundation/form"
+                    enctype="application/x-www-form-urlencoded"
+                    method="POST"
+                    style="vertical">
+                    <items jcr:primaryType="nt:unstructured">
+                        <title
+                            granite:id="componenteditor-component-title"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                            emptyText="Component name"
+                            name="./jcr:title"
+                            text="Component name"
+                            title="Component name"/>
+                        <supertype
+                            granite:id="dialogeditor-addform-resourceType"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/foundation/form/autocomplete"
+                            emptyText="Component Super Type"
+                            name="./sling:resourceSuperType"
+                            predicates="[type=cq:Component]"
+                            text="Component Super Type"
+                            title="Component Super Type">
+                            <datasource
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="/apps/component-generator/components/autocomplete/datasource"/>
+                            <options
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/foundation/form/autocomplete/list"/>
+                        </supertype>
+                        <groupname
+                            granite:id="component-generator-groupname"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/foundation/form/autocomplete"
+                            emptyText="Group name"
+                            name="./componentGroup"
+                            text="Component Group name"
+                            title="Component Group name">
+                            <options
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/foundation/form/autocomplete/list"/>
+                            <datasource
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="/apps/component-generator/components/autocomplete/componentgroup"/>
+                        </groupname>
+                        <iscontainer
+                            granite:id="component-generator-iscontainer"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/checkbox"
+                            name="./cq:isContainer"
+                            text="Is Container"
+                            title="is Container"
+                            value="{Boolean}true"/>
+                        <charset
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                            ignoreData="{Boolean}true"
+                            name="_charset_"
+                            value="UTF-8"/>
+                        <nodetype
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                            ignoreData="{Boolean}true"
+                            name="./jcr:primaryType"
+                            value="cq:Component"/>
+                    </items>
+                </form>
+            </items>
+            <footer jcr:primaryType="nt:unstructured">
+                <cancel
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/button"
+                    text="Cancel">
+                    <parentConfig
+                        jcr:primaryType="nt:unstructured"
+                        close="{Boolean}true"/>
+                </cancel>
+                <submit
+                    granite:id="component-generator-form-submit"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/button"
+                    disabled="{Boolean}true"
+                    formId="component-generator-form"
+                    text="Create"
+                    trackingFeature="aem:assets:metadataschema:add"
+                    type="submit"
+                    variant="primary">
+                    <parentConfig
+                        jcr:primaryType="nt:unstructured"
+                        close="{Boolean}true"/>
+                </submit>
+            </footer>
+        </create>
+        <setting
+            jcr:primaryType="nt:unstructured"
+            jcr:title="Settings"
+            sling:resourceType="granite/ui/components/coral/foundation/dialog">
+            <items jcr:primaryType="nt:unstructured">
+                <form
+                    granite:id="dialogeditor-setting"
+                    jcr:primaryType="nt:unstructured"
+                    jcr:title="Settings"
+                    sling:resourceType="granite/ui/components/coral/foundation/form"
+                    enctype="application/x-www-form-urlencoded"
+                    method="POST"
+                    style="vertical">
+                    <items jcr:primaryType="nt:unstructured">
+                        <projectpath
+                            granite:id="dialogeditor-settings-projectpath"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                            emptyText="Select project"
+                            name="./project-path"
+                            rootPath="/apps"/>
+                        <core
+                            granite:id="dialogeditor-settings-core"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                            emptyText="Core module directory"
+                            name="./coremodule"/>
+                        <charset
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/hidden"
+                            ignoreData="{Boolean}true"
+                            name="_charset_"
+                            value="UTF-8"/>
+                        <ui-component
+                            granite:id="dialogeditor-settings-uicomponent"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                            emptyText="UI module directory"
+                            name="./uimodule"/>
+                        <react-module
+                            granite:id="dialogeditor-settings-reactmodule"
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                            emptyText="React module directory"
+                            name="./reactmodule"/>
+                    </items>
+                </form>
+            </items>
+            <footer jcr:primaryType="nt:unstructured">
+                <cancel
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/button"
+                    text="Cancel">
+                    <parentConfig
+                        jcr:primaryType="nt:unstructured"
+                        close="{Boolean}true"/>
+                </cancel>
+                <submit
+                    granite:id="dialogeditor-setting-submit"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/button"
+                    text="Save"
+                    type="submit"
+                    variant="primary"/>
+            </footer>
+        </setting>
+    </dialogs>
+</jcr:root>

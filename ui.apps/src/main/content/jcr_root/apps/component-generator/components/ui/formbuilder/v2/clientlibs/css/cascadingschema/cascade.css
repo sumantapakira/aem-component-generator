@@ -1,0 +1,223 @@
+#cf-general-field-value-check {
+    background-color: #fafafa;
+    color: rgba(0,0,0,0.4);
+	width: 1.6rem;
+    text-align: center;
+}
+
+#cf-general-dropdown-field-values, #cf-choice-dropdown-field-values {
+	margin-top: 1rem;
+}
+
+#clear-all-general-label, #clear-all-choice-label {
+	float: right;
+}
+
+#cf-general-field-dropdown {
+	width: 18.1rem;
+    margin-top: 0.2rem;
+}
+
+#cf-choice-field-dropdown {
+	width: 15.9rem;
+    margin-top: 0.2rem;
+}
+
+#cf-general-field-values-table {
+	height: 16.2rem;
+    background-color: #f5f5f5;
+    color: #323232;
+    border: 0.6px solid #efdddd;
+}
+
+.add-general-rule, .rule-applied-section, .rule-applied-info {
+	margin-bottom: 0.6rem;
+}
+
+.clear-all-general-fields, #clear-all-choice-label{
+	cursor: pointer;
+}
+
+#choice-field-label {
+	margin-left: 11.9rem;
+}
+
+#choice-dropdown-label {
+	width: 15.9rem;
+}
+
+#choice-dropdown-label > coral-icon, #general-dropdown-label > coral-icon {
+	float: right;
+    color: #615b5b;
+}
+
+#cf-choice-dropdown-field-values {
+	height: 20rem;
+    width: 31.6rem;
+}
+
+#cf-column-selection {
+	border: 0.4px solid #e9e9e9;
+}
+
+.rule-applied-section {
+	width: 19rem;
+    text-align: left;
+    background-color: rgb(250, 250, 250);
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(208, 208, 208);
+    box-sizing: border-box;
+    color: rgb(112, 112, 112);
+    cursor: pointer;
+    display: inline-block;
+    font-family: adobe-clean,Helvetica,Arial,sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    height: 38px;
+    line-height: 16px;
+    margin-bottom: 9.6px;
+    min-width: 38px;
+    padding: 10px;
+    text-align: left;
+    text-decoration-color: rgb(112, 112, 112);
+    text-decoration-line: none;
+    text-decoration-style: solid;
+    vertical-align: top;
+    width: 304px;
+    border-radius: 4px
+}
+
+.delete-general-rule, .delete-choice-rule {
+	float: right;
+    margin-left: 10px;
+}
+
+.edit-general-rule, .edit-choice-rule {
+	float:right;
+}
+
+.radio-label-info {
+	margin-left: 0.2rem;
+    color: #615b5b;
+}
+
+.choice-radio-label-info {
+	margin-left: 8.2rem;
+    bottom: 2.1rem;
+    position: relative;
+}
+
+.visibility-radio-label-info {
+    margin-left: 10.4rem;
+    bottom: 2.1rem;
+    position: relative;
+}  
+
+.required-radio-label-info {
+    margin-left: 11.3rem;
+    bottom: 2.3rem;
+    position: relative;
+}          
+
+.choice-info-tooltip {
+    margin-left: 9.6rem;
+    bottom: 4.6rem;
+    position: relative;
+    background-color: #d5e6d8;
+}
+
+.visibility-info-tooltip {
+    margin-left: 11.6rem;
+    bottom: 4.6rem;
+    position: relative;
+    background-color: #d5e6d8;
+} 
+
+.required-info-tooltip {
+    margin-left: 12.5rem;
+    bottom: 4.7rem;
+    position: relative;
+    background-color: #d5e6d8;
+}     
+
+.rules-radio {
+	width: fit-content;
+}
+
+#choice-radio-group-section, #visibility-radio-group-section {
+	height: 5rem;
+}
+
+#required-radio-group-section {
+	height: 8rem;
+}
+
+#general-dropdown-label > .dependant-from-info-tooltip {
+	margin-left: 18.5rem;
+    top: 2.9rem;
+    width: 11rem;
+    background-color: #d5e6d8;
+}
+
+#choice-dropdown-label > .dependant-from-info-tooltip {
+	margin-left: 16.2rem;
+    top: 2.9rem;
+    width: 11rem;
+    background-color: #d5e6d8;
+}
+
+#cf-change-error-close {
+	margin-top: -0.6rem;
+    margin-left: -0.5rem;
+}
+
+#ct-value-item-content {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 9.5rem;
+}
+
+#default-tag {
+    float: right;
+    margin-top: -1.7rem;
+    margin-right: 0.2rem;
+    position: relative;
+}
+
+#default-radio {
+    float: right;
+    margin-top: -2.2rem;
+    position: relative;
+}
+
+#general-rule-dialog #cf-change-error {
+    z-index: 100000;
+    height: 0rem;
+    margin-bottom: -0.5rem;
+    margin-left: 0.8rem;
+    padding-right: 0.2rem !important;
+    padding-left: 0.2rem !important;
+}
+
+#choice-rule-dialog #cf-change-error {
+    left: 20%;
+    z-index: 100000;
+    height: 0rem;
+    margin-bottom: -0.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.has-selected-items > coral-columnview-item-thumbnail > coral-icon {
+    color: rgba(50,110,200,0.75);
+}
+
+.rule-applied-info > coral-icon {
+    vertical-align: middle;
+}
+
+.rule-applied-info > span {
+    color: rgba(102, 115, 128, 1);
+}

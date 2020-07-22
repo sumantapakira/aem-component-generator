@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <filter root="/conf/component-generator" mode="merge"/>
+    <filter root="/content/component-generator" mode="merge"/>
+    <filter root="/content/dam/component-generator" mode="merge"/>
+    <filter root="/content/experience-fragments/component-generator" mode="merge"/>
+    <filter root="/apps/cq/core/content/nav/tools/acs-commons/component-generator"/>
+</workspaceFilter>
