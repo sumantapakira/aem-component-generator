@@ -14,5 +14,5 @@ public interface ComponentListService {
      List<Resource> getListOfComponents(ResourceResolver resourceResolver, String path);
      List<String> getListOfComponentsGroup(ResourceResolver resourceResolver);
      Iterator<Resource> getCustomizedComponentList(ResourceResolver resourceResolver, SlingScriptHelper sling, SlingHttpServletRequest request);
-     String getUserComponentPath(ResourceResolver resourceResolver) throws RepositoryException;
+     String getUserComponentPath(ResourceResolver resourceResolver, String pathType) throws RepositoryException;
 }

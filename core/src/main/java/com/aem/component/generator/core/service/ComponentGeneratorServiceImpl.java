@@ -16,7 +16,9 @@ import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.jcr.Node;
 import javax.jcr.RepositoryException;
+import javax.jcr.Session;
 import javax.jcr.Value;
 import javax.jcr.query.Query;
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ import java.util.List;
 public class ComponentGeneratorServiceImpl implements ComponentGeneratorService{
 
     private static final Logger LOG = LoggerFactory.getLogger(ComponentGeneratorServiceImpl.class);
+    private static final String DEFAULT_PATH= "/apps/component-generator/components";
 
     @Override
     public List<Resource> getListOfComponents(ResourceResolver resourceResolver, String path) {
@@ -65,12 +68,13 @@ public class ComponentGeneratorServiceImpl implements ComponentGeneratorService{
 
     @Override
     public String getUserComponentPath(ResourceResolver resourceResolver) throws RepositoryException {
-        UserManager usMgr = resourceResolver.adaptTo(UserManager.class);
-        Authorizable authorizable = usMgr.getAuthorizable(resourceResolver.getUserID());
-        User user = (User) authorizable;
-        Value[] value = user.getProperty("component_path");
-        String componentPath = StringUtils.defaultIfEmpty(value[0].getString(),"/apps/");
-        return componentPath;
+        Session session = resourceResolver.adaptTo(Session.class);
+        if(session.nodeExists("/var/component-generator/settings")){
+            Node settingNode = session.getNode("/var/component-generator/settings");
+            String componentProp = settingNode.hasProperty("component_path") ? settingNode.getProperty("component_path").getString() : StringUtils.EMPTY;
+            String componentPath = StringUtils.defaultIfEmpty(componentProp,DEFAULT_PATH);
+        }
+        return DEFAULT_PATH;
     }
 }
 
