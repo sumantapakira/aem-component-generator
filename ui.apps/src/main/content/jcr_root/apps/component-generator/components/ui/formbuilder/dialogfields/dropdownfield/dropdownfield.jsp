@@ -23,9 +23,6 @@
 </div>
 
 <div class="formbuilder-content-properties dropdownfield">
-
-
-
     <%
         String[] settingsList = {"metadatamappertextfield","labelfields" };
         for(String settingComponent : settingsList){
@@ -48,7 +45,7 @@
             <tr class="coral-Table-row">
                 <td class="coral-Table-cell">
                     <label>
-                        <input type="radio" name="choice-options" class="radio-choice-manual" key="<%= xssAPI.encodeForHTMLAttr(key) %>" <%= hasJsonPath ? "" : "checked" %>>
+                        <input type="radio" name="choice-options" class="radio-choice-manual manual-radio-propmap-<%= xssAPI.encodeForHTMLAttr(key) %>" >
                         <span style="margin-left: 0.5rem;"><%= xssAPI.encodeForHTML(i18n.get("Add Manually")) %></span>
                     </label>
                 </td>
@@ -69,17 +66,7 @@
                    id="<%= xssAPI.encodeForHTMLAttr("list-" + key) %>"
                    data-list-id="<%= xssAPI.encodeForHTMLAttr(key) %>" selectable>
                 <tbody class="coral-Table-body">
-                <%
-                    Resource jsonResource = resourceResolver.getResource(jsonPath);
-                    if (jsonResource == null && resource.getChild("items") != null) {
-                        Iterator<Resource> formfields = resource.getChild("items").listChildren();
-                        while (formfields.hasNext()) {
-                            Resource itemResource = formfields.next();
-                            %><sling:include resource="<%= itemResource %>"
-                                    resourceType="dam/gui/coral/components/admin/schemaforms/formbuilder/formfields/v2/dropdownfield/dropdownitem"/><%
-                        }
-                    }
-                %>
+               
                 <tr class="coral-Table-row">
                     <%--Empty column to align the width with radio buttons--%>
                     <td class="coral-Table-cell" style="border: none !important;background: none !important;"></td>
@@ -93,6 +80,7 @@
                 </tr>
                 </tbody> 
             </table>
+			<div class="dropdown-manual-table-<%= xssAPI.encodeForHTMLAttr(key) %>"> </div>
         </div>
     </div>
 

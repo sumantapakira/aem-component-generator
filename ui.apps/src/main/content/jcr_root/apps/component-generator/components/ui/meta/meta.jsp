@@ -1,3 +1,4 @@
+
 <%@include file="/libs/granite/ui/global.jsp"%><%
 %><%@page session="false"
           import="org.apache.jackrabbit.util.Text"%><%

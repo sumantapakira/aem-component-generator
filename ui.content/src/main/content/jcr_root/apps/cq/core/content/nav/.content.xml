@@ -3,5 +3,6 @@
     jcr:primaryType="nt:unstructured">
     <tools jcr:primaryType="nt:unstructured">
         <acs-commons/>
+        <component-generator/>
     </tools>
 </jcr:root>

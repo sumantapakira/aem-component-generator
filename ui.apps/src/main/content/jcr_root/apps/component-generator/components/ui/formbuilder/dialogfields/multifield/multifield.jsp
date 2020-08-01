@@ -9,9 +9,6 @@
 String resourcePathBase = "component-generator/components/ui/formbuilder/formproperties/";
 
 %>
-
-
-
 <div class="formbuilder-content-form" role="gridcell">
     <label class="fieldtype">
     <coral-icon alt="" icon="multi" size="XS"></coral-icon><%= xssAPI.encodeForHTML(i18n.get("Multi Field")) %>
@@ -19,9 +16,7 @@ String resourcePathBase = "component-generator/components/ui/formbuilder/formpro
     <sling:include resource="<%= resource %>" resourceType="granite/ui/components/coral/foundation/form/textfield"/>
 </div>
 <div class="formbuilder-content-properties multifield" data-multifield-key=<%= key %>>
-
-
-    <% 
+    <%
         String[] settingsList = {"metadatamappertextfield","labelfields", "requiredfields"};
         for(String settingComponent : settingsList){
             %>

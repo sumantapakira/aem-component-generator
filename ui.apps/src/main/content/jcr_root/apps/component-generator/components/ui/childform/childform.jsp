@@ -16,46 +16,21 @@
 <%
 %><%@include file="/libs/granite/ui/global.jsp"%><%
 %><%@page import="javax.jcr.RepositoryException,
-                java.util.Iterator,
-                javax.jcr.Node,
                 com.adobe.granite.ui.components.AttrBuilder,
                 com.adobe.granite.ui.components.Tag,
                 org.apache.sling.api.resource.Resource,
-                org.apache.sling.api.resource.ResourceResolver,
-                org.apache.sling.api.resource.ValueMap,
-                com.adobe.granite.ui.components.Config,
-                com.day.cq.dam.api.DamConstants,
-                com.adobe.granite.confmgr.Conf,
-                com.day.cq.dam.commons.util.DamConfigurationConstants,
-                com.day.cq.dam.commons.util.DamUtil,
-                org.apache.sling.tenant.Tenant,
-                com.adobe.granite.xss.XSSAPI,
-                com.adobe.granite.ui.components.ComponentHelper,
-                com.day.cq.commons.LabeledResource,
-				com.day.cq.i18n.I18n"%><%
+                com.day.cq.commons.LabeledResource"%><%
 
-String schemaListVanity = "/mnt/overlay/dam/gui/content/metadataschemaeditor/schemalist.html";
 String contextPath = request.getContextPath();
-String schemaExtHome = slingRequest.getParameter("formPath");
-Resource schemaExtHomeRes = resourceResolver.getResource(schemaExtHome);
-String schemaHome =  DamConfigurationConstants.OOTB_METADATA_SCHEMA_FORM_HOME;
-if(schemaExtHomeRes != null){
-    Conf conf = resourceResolver.getResource(DamUtil.getTenantAssetsRoot(resourceResolver)).adaptTo(Conf.class);
-    schemaHome = conf.getItem(DamConfigurationConstants.ADMIN_UI_OOTB_CONF_RELPATH).get(DamConfigurationConstants.METADATA_SCHEMA_HOME, DamConfigurationConstants.OOTB_METADATA_SCHEMA_FORM_HOME);
-
-}
-
+String componentHome = slingRequest.getParameter("formPath");
 
 String resourcePath = resource.getPath();
 String relativePath = "";
 boolean isFormModified = false;
-if(resourcePath.startsWith(schemaExtHome)){
+if(resourcePath.startsWith(componentHome)){
     isFormModified = true;
-    relativePath = resourcePath.substring(schemaExtHome.length());
-}else if(resourcePath.startsWith(schemaHome)){
-    relativePath = resourcePath.substring(schemaHome.length());
+    relativePath = resourcePath.substring(componentHome.length());
 }
-System.out.println(resource.getPath());
 String title = resource.adaptTo(LabeledResource.class).getTitle() != null ? resource.adaptTo(LabeledResource.class).getTitle():resource.getName() ;
 
 Tag tag = cmp.consumeTag();

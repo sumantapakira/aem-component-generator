@@ -12,7 +12,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
---%> <%@include file="/libs/granite/ui/global.jsp"%><%
+--%>
+<%@include file="/libs/granite/ui/global.jsp"%><%
 %><%@page import="java.util.ArrayList,
                   javax.jcr.Node,java.util.List,
                   java.util.Iterator,

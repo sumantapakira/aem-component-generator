@@ -1,19 +1,16 @@
 <%--
+  Copyright 2020 Sumanta Pakira
 
-  ADOBE CONFIDENTIAL
-  __________________
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-   Copyright 2017 Adobe Systems Incorporated
-   All Rights Reserved.
-
-  NOTICE:  All information contained herein is, and remains
-  the property of Adobe Systems Incorporated and its suppliers,
-  if any.  The intellectual and technical concepts contained
-  herein are proprietary to Adobe Systems Incorporated and its
-  suppliers and are protected by trade secret or copyright law.
-  Dissemination of this information or reproduction of this material
-  is strictly forbidden unless prior written permission is obtained
-  from Adobe Systems Incorporated.
+   http://www.apache.org/licenses/LICENSE-2.0
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
 
 --%>
 <%@ page session="false"%><%
@@ -22,45 +19,30 @@
                   com.adobe.granite.ui.components.Config,
                   com.day.cq.dam.commons.util.DamConfigurationConstants,
                   com.adobe.granite.compatrouter.CompatSwitchingService" %><%
-%><%
+%>
 
-    CompatSwitchingService compatService = sling.getService(CompatSwitchingService.class);
-    boolean compatMode63Active = false;
-    final String ASSETS_63_COMPAT = "Assets-General";
-    if (compatService != null && compatService.isCompatEnabled(ASSETS_63_COMPAT) && compatService.isFilteringEnabled()) {
-        compatMode63Active = true;
-    }
+<ui:includeClientLib categories="component.generator.dialog.editor" />
 
-    if (compatMode63Active) {
-%><ui:includeClientLib categories="dam.admin.ui.coral.schemaeditor.formbuilder" /><%
-} else { %><%
-%><ui:includeClientLib categories="dam.admin.ui.coral.schemaeditor.formbuilder.v2.custom" /><%
-    } %><%
-    // with schemaeditor current design , each new form being added required 15 to 20 more sling includes.
-// this is required to fix customer issue CQ-65100 (increasing max number of sling includes)
+<%
     slingRequest.setAttribute("sling.max.calls", 5000);
 
     Config cfg = new Config(resource);
-    String schemaExtHome = slingRequest.getParameter("formPath");
-    if(schemaExtHome == null || schemaExtHome.trim().isEmpty()){
-        schemaExtHome = slingRequest.getRequestPathInfo().getSuffix();
+    String componentHome = slingRequest.getParameter("formPath");
+    if(componentHome == null || componentHome.trim().isEmpty()){
+        componentHome = slingRequest.getRequestPathInfo().getSuffix();
     }
     String suffix = slingRequest.getRequestPathInfo().getSuffix();
     suffix = null == suffix ? "/" : suffix;
-    String absolutePath = suffix.startsWith(schemaExtHome) ? suffix : schemaExtHome + suffix;
+    String absolutePath = suffix.startsWith(componentHome) ? suffix : componentHome + suffix;
     absolutePath = absolutePath.endsWith("/") ? absolutePath.substring(0, absolutePath.length() - 1) : absolutePath;
 %>
 <div class="foundation-content-path hidden" data-foundation-content-path="<%= xssAPI.encodeForHTMLAttr(absolutePath) %>" data-foundation-relative-path="<%= xssAPI.encodeForHTMLAttr(suffix) %>"></div>
 <div class="formbuilder-wrapper"><%
-    if(compatMode63Active || !resource.getPath().contains("metadataschemaeditor")) {
-%><sling:call script="v2/builditems.jsp" /><%
-} else {
-%><sling:call script="v2/builditems333.jsp" /><%
-    }
-    if(compatMode63Active) {
-%><sling:call script="view.jsp" /><%
-} else {
-%><sling:call script="v2/view.jsp" /><%
-    } %><%
+    if(!resource.getPath().contains("metadataschemaeditor")) {
+%><sling:call script="builditems.jsp" />
+   <%
+} 
 %>
+<sling:call script="view.jsp" />
+
 </div>

@@ -1,70 +1,41 @@
-<%@page session="false"%><%
+<%--
+  Copyright 2020 Sumanta Pakira
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+   http://www.apache.org/licenses/LICENSE-2.0
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+--%> <%@page session="false"%><%
 %><%@page import=" java.util.Enumeration,
 				 org.apache.sling.api.resource.Resource,
                  javax.jcr.Node,
-                 com.adobe.granite.i18n.LocaleUtil,
                  com.adobe.granite.ui.components.Config,
                  org.apache.sling.api.request.RequestParameter,
-                 com.adobe.granite.confmgr.Conf,
-                 com.day.cq.dam.commons.util.DamConfigurationConstants,
-                 com.day.cq.dam.commons.util.SchemaFormHelper,
-                 org.apache.sling.tenant.Tenant,
-                 com.aem.component.generator.core.servlets.ComponentListService,
-                 org.apache.sling.api.resource.ResourceResolver,
-                 com.day.cq.dam.api.DamConstants"%><%
+                  com.aem.component.generator.core.servlets.ComponentListService,
+                 org.apache.sling.api.resource.ResourceResolver"%><%
 %><%@include file="/libs/granite/ui/global.jsp"%><%
     Config cfg = new Config(resource);
     String vanity = cfg.get("vanity", String.class);
 
-    String tenantAssetsRoot = DamConstants.MOUNTPOINT_ASSETS; //initialze with default
-    Tenant tenant = resourceResolver.adaptTo(Tenant.class);
-    //String schemaExtHome = DamConfigurationConstants.DEFAULT_METADATA_SCHEMA_HOME;
-
 final ResourceResolver resolver = resourceResolver;
 ComponentListService componentGeneratorService = sling.getService(ComponentListService.class);
-//ComponentGeneratorService componentGeneratorService = sling.getService(ComponentGeneratorService.class);
-String schemaExtHome = componentGeneratorService.getUserComponentPath(resolver) ;
-//String schemaExtHome = "/apps/component-generator/components";
-
-    Resource schemaExtHomeRes = resourceResolver.getResource(schemaExtHome);
-    if (null != tenant) {
-        String tenantSchemaHomeProperty = (String)tenant.getProperty(DamConfigurationConstants.METADATA_SCHEMA_HOME);
-        if (tenantSchemaHomeProperty != null && !tenantSchemaHomeProperty.trim().isEmpty()) {
-            Resource tenantSchemaHomeRes = resourceResolver.getResource(tenantSchemaHomeProperty);
-            if (tenantSchemaHomeRes != null) {
-                schemaExtHome = tenantSchemaHomeProperty;
-                schemaExtHomeRes = tenantSchemaHomeRes;
-            }
-        }
-        tenantAssetsRoot = (String)tenant.getProperty(DamConfigurationConstants.DAM_ASSETS_ROOT);
-    }
-    String schemaHome =  DamConfigurationConstants.OOTB_METADATA_SCHEMA_FORM_HOME;
-    if(schemaExtHomeRes != null){
-       Conf conf = resourceResolver.getResource(tenantAssetsRoot).adaptTo(Conf.class);
-       schemaHome = conf.getItem(DamConfigurationConstants.ADMIN_UI_OOTB_CONF_RELPATH).get(DamConfigurationConstants.METADATA_SCHEMA_HOME, DamConfigurationConstants.OOTB_METADATA_SCHEMA_FORM_HOME);
-
-    }
+String componentHome = componentGeneratorService.getUserComponentPath(resolver,"component_path") ;
 
     String contextPath = request.getContextPath();
     String relativePath = slingRequest.getRequestPathInfo().getSuffix();
     relativePath = null == relativePath || relativePath.trim().isEmpty() ? "" : relativePath;
     boolean isRedirectRequired = true;
-    // convert the schemaHome path to absolute path
-    schemaHome = resourceResolver.getResource(schemaHome).getPath();
 
-    if(relativePath.startsWith(schemaExtHome)){
-        relativePath = relativePath.substring(schemaExtHome.length());
-    }else if(relativePath.startsWith(schemaHome)){
-        relativePath = relativePath.substring(schemaHome.length());
+    if(relativePath.startsWith(componentHome)){
+        relativePath = relativePath.substring(componentHome.length());
     }else{
         isRedirectRequired = false;
     }
-
-
-    Resource res = resourceResolver.getResource(schemaExtHome + relativePath);
-    if (null == res) {
-        res = resourceResolver.getResource(schemaHome + relativePath);
-    }
+    Resource res = resourceResolver.getResource(componentHome + relativePath);
     if (res == null) {
         response.sendError(404);
         return;
@@ -74,15 +45,14 @@ String schemaExtHome = componentGeneratorService.getUserComponentPath(resolver) 
     RequestParameter formPath = slingRequest.getRequestParameter("formPath");
     String formPathStr = formPath != null ? formPath.getString() : "";
 
-    if (!schemaExtHome.equals(formPathStr.trim())) {
+    if (!componentHome.equals(formPathStr.trim())) {
         isRedirectRequired = true;
     }
 
-    if (isRedirectRequired) {
+ if (isRedirectRequired) {
 		StringBuilder sb = new StringBuilder("");
-		sb.append(contextPath + vanity + relativePath + "?formPath=" + schemaExtHome);
+		sb.append(contextPath + vanity + relativePath + "?formPath=" + componentHome);
 
-		//Append other request parameters as well if redirection is required so that those params are not lost.
 		Enumeration requestParamNames = slingRequest.getParameterNames();
 		while (requestParamNames.hasMoreElements()) {
 			String parameterName = (String) requestParamNames.nextElement();

@@ -26,9 +26,9 @@
                 type: "POST",
                 data: {
                     projectpath : projectpath,
-                    coremodule: coremodule,
-                    uimodule: uimodule,
-                    reactmodule: reactmodule},
+                    corepath: coremodule,
+                    uipath: uimodule,
+                    reactpath: reactmodule},
                 success: function(result) {
                     window.location.reload();
                 },
