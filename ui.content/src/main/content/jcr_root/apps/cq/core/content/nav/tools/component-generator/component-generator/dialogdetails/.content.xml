@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        jcr:primaryType="nt:unstructured"
+        jcr:title=" Dialog Editor"
+        sling:resourceType="granite/ui/components/coral/foundation/page"
+        consoleId="cq-assets-metadataschemas-edit">
+        <head jcr:primaryType="nt:unstructured">
+            <viewport
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/admin/page/viewport"/>
+            <favicon
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/page/favicon"/>
+            <contentchecker
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="component-generator/components/ui/contentchecker"
+                vanity="/apps/cq/core/content/nav/tools/component-generator/component-generator/dialogdetails.html"/>
+            <clientlibs
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="granite/ui/components/coral/foundation/includeclientlibs"
+                categories="[coralui3,granite.ui.coral.foundation,dam.gui.coral.propertypicker]"/>
+        </head>
+        <body
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="granite/ui/components/coral/foundation/page/body">
+            <items jcr:primaryType="nt:unstructured">
+                <form
+                    granite:class="cq-damadmin-admin-schema-edit-form"
+                    granite:id="schema-edit-form"
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/form"
+                    action="${requestPathInfo.suffix}"
+                    enctype="application/x-www-form-urlencoded"
+                    maximized="{Boolean}true"
+                    method="post"
+                    novalidate="{Boolean}false"
+                    style="vertical">
+                    <items jcr:primaryType="nt:unstructured">
+                        <wizard
+                            granite:class="cq-damadmin-admin-metadata-schemaedit"
+                            granite:id="schemaeditform"
+                            granite:rel="schema-edit-wizard"
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="AEM Dialog editor"
+                            sling:resourceType="granite/ui/components/coral/foundation/wizard"
+                            cancelHref="${empty header.Referer ? &quot;/assets.html&quot; : header.Referer}"
+                            trackingFeature="aem:assets:metadataschema:edit">
+                            <items jcr:primaryType="nt:unstructured">
+                                <editorStep
+                                    jcr:primaryType="nt:unstructured"
+                                    jcr:title="UI Dialog Editor"
+                                    sling:resourceType="granite/ui/components/coral/foundation/container">
+                                    <items jcr:primaryType="nt:unstructured">
+                                        <formbuilder
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="component-generator/components/ui/formbuilder"
+                                            formfields="dam/gui/coral/components/admin/schemaforms/formbuilder/formfields"
+                                            hidePimField="{Boolean}true">
+                                            <initializeconf
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="dam/gui/coral/components/commons/initializeconf"
+                                                path="${param.formPath}"/>
+                                        </formbuilder>
+                                        <contentPath
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="dam/gui/coral/components/commons/ui/shell/contentpath"/>
+                                    </items>
+                                    <parentConfig
+                                        jcr:primaryType="nt:unstructured"
+                                        validation="{Boolean}false">
+                                        <next
+                                            granite:class="foundation-wizard-control"
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/button"
+                                            text="Save"
+                                            type="submit"
+                                            variant="primary">
+                                            <granite:data
+                                                jcr:primaryType="nt:unstructured"
+                                                foundation-wizard-control-action="next"/>
+                                        </next>
+                                    </parentConfig>
+                                </editorStep>
+                            </items>
+                        </wizard>
+                    </items>
+                    <priviledgecondition
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="dam/gui/coral/components/commons/renderconditions/haspermissions"
+                        path="${param.formPath}"
+                        privileges="[add_node,modify_property,remove_node]"/>
+                </form>
+            </items>
+        </body>
+    </jcr:content>
+</jcr:root>

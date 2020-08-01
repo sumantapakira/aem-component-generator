@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+    jcr:description="UI based AEM Component Generator"
+    jcr:primaryType="nt:unstructured"
+    jcr:title="AEM Component Generator"
+    href="/apps/cq/core/content/nav/tools/component-generator/component-generator/componentlist.html"
+    icon="actions"
+    id="aem__component-generator"
+    target="_blank">
+    <componentlist/>
+    <dialogdetails/>
+    <test/>
+</jcr:root>
