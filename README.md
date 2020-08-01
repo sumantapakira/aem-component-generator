@@ -11,7 +11,7 @@ Demo : https://youtu.be/PecIIKGGLpQ
 
 * Java Code generation
 * React Code generation
-* Design dialog creating
+* Design dialog creation
 
 
 
