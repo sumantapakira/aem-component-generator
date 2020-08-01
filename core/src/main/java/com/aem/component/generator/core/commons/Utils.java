@@ -1,3 +1,19 @@
+/*
+ * Copyright Sumanta Pakira
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
 package com.aem.component.generator.core.commons;
 
 import com.aem.component.generator.core.servlets.CreateComponentDialogServlet;
@@ -118,8 +134,10 @@ public class Utils {
      * @param fileName
      */
     public static void createSlingModelClass(@NotNull String directory, @NotNull String fileName) {
-        String folderPath = getBaseDirectoryPath(directory);
+        String folderPath = getBaseDirectoryPath(directory, "model");
         if (StringUtils.isNotBlank(folderPath)) {
+            fileName = fileName.replaceAll("-","");
+            fileName = fileName.replaceAll("_","");
             String fileDirctory = folderPath + Constants.FORWARD_SLASH + fileName + Constants.JAVA_EXTENSION;
             Path file = Paths.get(fileDirctory);
             LOG.debug("File name {} , created at {}, package location {}", file.getFileName(), fileDirctory, getPackageName(folderPath));
@@ -137,7 +155,7 @@ public class Utils {
      * @param fileName
      */
     public static void createReactComponent(@NotNull String directory, @NotNull String fileName) {
-        String folderPath = getBaseDirectoryPath(directory);
+        String folderPath = getBaseDirectoryPath(directory,"component");
         if (StringUtils.isNotBlank(folderPath)) {
             String fileDirctory = folderPath + Constants.FORWARD_SLASH + fileName + Constants.JS_EXTENSION;
             Path file = Paths.get(fileDirctory);
@@ -151,10 +169,10 @@ public class Utils {
      * @param directory
      * @return
      */
-    private static String getBaseDirectoryPath(String directory) {
+    private static String getBaseDirectoryPath(String directory, String folderName) {
         try (Stream<Path> walk = Files.walk(Paths.get(directory))) {
             return walk.map(x -> x.toString())
-                    .filter(f -> (f.endsWith("model") || f.endsWith("models")) && !f.contains("test") && !f.contains("target")).collect(Collectors.joining());
+                    .filter(f -> (f.endsWith(folderName) || f.endsWith(folderName +"s")) && !f.contains("node_modules") && !f.contains("test") && !f.contains("target")).collect(Collectors.joining());
         } catch (Exception e) {
             LOG.error("Error: ", e);
         }

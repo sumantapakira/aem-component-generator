@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * This is not used
+ */
 @Component(service = ComponentGeneratorService.class,configurationPolicy= ConfigurationPolicy.OPTIONAL,  immediate = true, enabled = true)
 
 @ServiceDescription("My simple service")
