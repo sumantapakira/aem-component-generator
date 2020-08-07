@@ -29,8 +29,7 @@
     values.put("fieldLabel",   i18n.get("Field Label"));
     values.put("emptyText",    i18n.get("field label"));
     values.put("value",        i18n.getVar(fieldProperties.get("fieldLabel", String.class)));
-//values.put("name",         "./items/" + resource.getName() + "/fieldLabel");
-    
+
     FormResourceManager formResourceManager = sling.getService(FormResourceManager.class);
     Resource labelFieldResource = formResourceManager.getDefaultPropertyFieldResource(resource, values);
 
