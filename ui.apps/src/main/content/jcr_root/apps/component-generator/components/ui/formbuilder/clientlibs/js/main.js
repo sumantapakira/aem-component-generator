@@ -580,17 +580,7 @@
         }
     });
 
-    $(document).on("click", ".delete-field", function(e) {
-        e.preventDefault();
-        showDeleteDialog($(this));
-    });
 
-    $(document).on("keypress", ".delete-field", function(e) {
-        if (e.keyCode === 13) {
-            e.preventDefault();
-            showDeleteDialog($(this));
-        }
-    });
 
     function showDeleteDialog(element) {
         var targetId = element.data("target-id");

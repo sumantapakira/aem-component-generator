@@ -42,6 +42,8 @@
     HashMap<String, Object> values = new HashMap<String, Object>();
     values.put("granite:class",        "field-mvtext-descriptor property-picker-field propmap-"+resource.getName() );
     values.put("fieldLabel",   i18n.get("Map to property"));
+    values.put("required",   "true");
+    values.put("emptyText",    i18n.get("Enter name of the property"));
 
     FormResourceManager formResourceManager = sling.getService(FormResourceManager.class);
     Resource labelFieldResource = formResourceManager.getDefaultPropertyFieldResource(resource, values);

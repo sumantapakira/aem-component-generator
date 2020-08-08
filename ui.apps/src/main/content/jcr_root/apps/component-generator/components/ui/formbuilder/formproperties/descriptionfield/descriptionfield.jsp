@@ -25,12 +25,12 @@
     Config cfg = new Config(resource);
 
     HashMap<String, Object> values = new HashMap<String, Object>();
-    values.put("granite:class", "field-label-descriptor fieldlabelmap-"+resource.getName());
-    values.put("fieldLabel",   i18n.get("Field Label"));
-    values.put("emptyText",    i18n.get("Enter field label"));
+    values.put("granite:class", "field-descriptor-hint fielddescription-"+resource.getName());
+    values.put("fieldLabel",   i18n.get("Field description"));
+    values.put("emptyText",    i18n.get("Enter hint for description hint."));
 
 
     FormResourceManager formResourceManager = sling.getService(FormResourceManager.class);
     Resource labelFieldResource = formResourceManager.getDefaultPropertyFieldResource(resource, values);
 
-%><sling:include resource="<%= labelFieldResource %>" resourceType="granite/ui/components/coral/foundation/form/textfield"/>
+%><sling:include resource="<%= labelFieldResource %>" resourceType="granite/ui/components/coral/foundation/form/textarea"/>

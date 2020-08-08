@@ -14,8 +14,9 @@
 (function(window, document, Granite, $, History) {
     "use strict";
     var DIALOG_BASE_URI = "./cq:dialog/content/items/tabs/items/";
-    $(document).on("change", ".field-label-descriptor", function(event) {
+    var REGEX =  /^[^/]+/
 
+    $(document).on("change", ".field-label-descriptor", function(event) {
         var field = $(".form-fields").find(".ui-selected");
         var itemid = field.data("id");
         var value = this.value;
@@ -35,6 +36,27 @@
                 }
 		});
    });
+
+       $(document).on("change", ".field-descriptor-hint", function(event) {
+           var field = $(".form-fields").find(".ui-selected");
+           var itemid = field.data("id");
+           var value = this.value;
+           var tabs = $("nav", "#tabs-navigation").find("a:not(#formbuilder-add-tab)");
+
+           var mappedpropname = $(".propmap-"+itemid).val();
+           if(mappedpropname.indexOf("./") === 0){
+   			mappedpropname = mappedpropname.substring(2);
+           }
+            $.each(tabs, function(tabindex, tab) {
+           		if($(tab).attr('tabindex') === '0'){
+           		  if($(".fieldDescriptionHint-"+itemid).length > 0){
+           		    $(".fieldDescriptionHint-"+itemid).attr("value",value);
+           		  }else{
+                       $("#tabs-navigation").append(_createHiddenTag(DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/fieldDescription", value, "fieldDescriptionHint-"+itemid));
+                      }
+                   }
+   		});
+      });
 
     $(document).on("change", ".field-required-checkbox", function(event) {
         var field = $(".form-fields").find(".ui-selected");
@@ -63,6 +85,7 @@
         var datasourceField = $(".datasource-radio-propmap-"+itemid).is(':checked');
         if(datasourceField){
           $(".datasource-textinput-propmap-"+itemid).prop('disabled', false);
+          	disableAddChoiceBtnElement(itemid);
         }
     });
 
@@ -72,6 +95,8 @@
         var datasourceField = $(".datasource-radio-propmap-"+itemid).is(':checked');
         if(!datasourceField){
           $(".datasource-textinput-propmap-"+itemid).prop('disabled', true);
+          enableAddChoiceBtnElement(itemid);
+          $('#datasourcevontainerid-'+itemid).remove();
         }
 
     });
@@ -91,7 +116,7 @@
          var resourceType;
         if(datasourceField){
 			resourceType = $(".datasource-textinput-propmap-"+itemid).val();
-        }
+		}
          if(datasourceField){
          $.each(tabs, function(tabindex, tab) {
         		if($(tab).attr('tabindex') === '0'){
@@ -130,7 +155,11 @@
 
          $.each(tabs, function(tabindex, tab) {
         		if($(tab).attr('tabindex') === '0'){
-                   $("#tabs-navigation").append(_createHiddenTag(DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/rootPath", value));
+                   if($(".pathfield-rootcontent-"+itemid).length > 0){
+                      $(".pathfield-rootcontent-"+itemid).attr("value",value);
+                     }else{
+                      $("#tabs-navigation").append(_createHiddenTag(DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/rootPath", value, "pathfield-rootcontent-"+itemid));
+                   }
                 }
 		});
 
@@ -140,9 +169,7 @@
         var activeProperties = $("section.active", ".editor-right");
         var field = $(".form-fields").find(".ui-selected");
         var resourceType;
-
         var val = $(this).val();
-
 
         if(parseInt(field.children(".textfield").length)>0){
             resourceType = "granite/ui/components/coral/foundation/form/textfield";
@@ -167,6 +194,11 @@
                  var containerId;
                  var elementType;
 
+                 enableDropDownRadioElement(itemid);
+                 enableMultifieldSelectElement(itemid);
+
+                 $('.formbuilder-content-properties .propmap-'+itemid).val(propertynodename);
+
                  if(parseInt(field.children(".imagefield").length)>0 ){
                     elementType = "imagefield";
                  }else if(parseInt(field.children(".multifield").length)>0){
@@ -175,6 +207,8 @@
                     elementType = "dropdownfield";
                  }else if(parseInt(field.children(".richtextfield").length)>0){
                     elementType = "richtextfield";
+                 }else if(parseInt(field.children(".pathfield").length)>0){
+                    elementType = "pathfield";
                  }
 
                  if($('#container-'+itemid).length){
@@ -215,20 +249,10 @@
                             break;
          case "richtextfield": addRichTextElement(containerId, tabindex, propertynodename);
                             break;
+         case "pathfield": addDefaultRootPathToPathFieldElement(containerId, tabindex, propertynodename);
+                            break;
         }
-        /*if(elementType==="imagefield"){
-         addImageElement(containerId, tabindex, propertynodename, val);
-        }
-        if(elementType==="dropdownfield"){
-         addDropDownElement(containerId, tabindex, propertynodename);
-        }
-        if(elementType==="multifield"){
-         addMultiFieldElement(containerId, tabindex, propertynodename, val);
-        }
-        if(elementType==="richtextfield"){
-         addRichTextElement(containerId, tabindex, propertynodename);
-        }*/
-    }
+ }
 
     function addRichTextElement(containerId, tabindex, propertynodename){
           $("#tabs-navigation").append(containerId.append(_createHiddenTag(DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+propertynodename+"/useFixedInlineToolbar", true)));
@@ -297,6 +321,12 @@
         $("#tabs-navigation").append(containerId.append(_createHiddenTag(DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+propertynodename+"/items/jcr:primaryType","nt:unstructured")));
     }
 
+    function addDefaultRootPathToPathFieldElement(containerId, tabindex, propertynodename){
+        var divIdOfContainer = containerId.attr("id");
+        var itemId = divIdOfContainer.substring(divIdOfContainer.indexOf('-')+1);
+        $("#tabs-navigation").append(containerId.append(_createHiddenTag(DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+propertynodename+"/rootPath", "/content","pathfield-rootcontent-"+itemId)));
+    }
+
     function addImageElement(containerId, tabindex, propertynodename, val){
         $("#tabs-navigation").append(containerId.append(_createHiddenTag(DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+propertynodename+"/allowUpload", true)));
         $("#tabs-navigation").append(containerId.append(_createHiddenTag(DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+propertynodename+"/autoStart", true)));
@@ -318,7 +348,66 @@
             updateFieldLabelElement(propertynodename, tabindex, itemid);
             updateRequiredChekboxElement(propertynodename, tabindex, itemid);
             updateDescriptionHintElement(propertynodename, tabindex, itemid);
+            updateContetRootElement(propertynodename, tabindex, itemid);
+            updateManualDropDownElement(propertynodename, tabindex, itemid);
+            updateMultifieldHiddenElement(propertynodename,tabindex,itemid);
     }
+
+    function enableDropDownRadioElement(itemid){
+        if($(".datasource-radio-propmap-"+itemid).length > 0 && $(".manual-radio-propmap-"+itemid).length > 0){
+                     $(".manual-radio-propmap-"+itemid).removeAttr("disabled");
+                     $(".datasource-radio-propmap-"+itemid).removeAttr("disabled");
+                }
+    }
+
+    function enableAddChoiceBtnElement(itemid){
+        if($(".add-choice-"+itemid).length > 0){
+             $(".add-choice-"+itemid).removeAttr("disabled");
+        }
+    }
+
+    function enableMultifieldSelectElement(itemid){
+            if($(".multifield-select-"+itemid).length > 0){
+                 $(".multifield-select-"+itemid).removeAttr("disabled");
+            }
+        }
+
+    function disableAddChoiceBtnElement(itemid){
+            if($(".add-choice-"+itemid).length > 0){
+                 $(".add-choice-"+itemid).attr("disabled","true");
+            }
+            if($(".dropdown-manual-table-"+itemid).length > 0){
+                 $(".dropdown-manual-table-"+itemid).remove();
+            }
+            $('.manualdrpdwn-'+itemid).each(function(){
+                 $(this).remove();
+            });
+        }
+
+    function updateManualDropDownElement(propertynodename, tabindex, itemid){
+       var pattern = "./cq:dialog/content/items/tabs/items/tab"+ (tabindex + 1) +"/items/columns/items/column/items/";
+           $('.manualdrpdwn-'+itemid).each(function(){
+                var oldName = $(this).attr('name');
+                var trancatedName = truncateBefore(oldName, pattern);
+                var newName = trancatedName.replace(REGEX, propertynodename);
+                $(this).attr('name', pattern + newName);
+            });
+     }
+
+     function updateMultifieldHiddenElement(propertynodename,tabindex,itemid){
+     console.log(tabindex)
+            var pattern = "./cq:dialog/content/items/tabs/items/tab"+ (tabindex + 1) +"/items/columns/items/column/items/";
+                $('.multifield-hidden-element-'+itemid).each(function(){
+                     var oldName = $(this).attr('name');
+                     var trancatedName = truncateBefore(oldName, pattern);
+                     var newName = trancatedName.replace(REGEX, propertynodename);
+                     $(this).attr('name', pattern + newName);
+                 });
+          }
+
+     function truncateBefore (str, pattern) {
+       return str.slice(str.indexOf(pattern) + pattern.length);
+     };
 
     function updateDescriptionHintElement(propertynodename, tabindex, itemid){
             if($(".fieldDescriptionHint-"+itemid).length > 0){
@@ -337,6 +426,12 @@
              $(".requiredchekbox-"+itemid).attr("name",DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+propertynodename+"/required");
         }
     }
+
+    function updateContetRootElement(propertynodename, tabindex, itemid){
+           if($(".pathfield-rootcontent-"+itemid).length > 0){
+                $(".pathfield-rootcontent-"+itemid).attr("name",DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+propertynodename+"/rootPath");
+           }
+   }
 
      function _createHiddenTag(name, value, cssClass) {
          var input;
