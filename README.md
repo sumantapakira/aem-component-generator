@@ -13,6 +13,7 @@ Demo : https://youtu.be/PecIIKGGLpQ
 * React Code generation
 * Design dialog creation
 
+Please follow settings file on how to configure.
 
 
 
