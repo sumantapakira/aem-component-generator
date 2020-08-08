@@ -5,7 +5,6 @@
 
 	ValueMap fieldProperties = resource.adaptTo(ValueMap.class);
 	String key = resource.getName();
-    System.out.println("key : "+key);
 String resourcePathBase = "component-generator/components/ui/formbuilder/formproperties/";
 
 %>
@@ -18,34 +17,19 @@ String resourcePathBase = "component-generator/components/ui/formbuilder/formpro
     <sling:include resource="<%= resource %>" resourceType="granite/ui/components/coral/foundation/form/textfield"/>
 </div>
 <div class="formbuilder-content-properties pathfield">
-
-
-    <% 
-        //String[] settingsList = {"labelfields", "metadatamappertextfield", "placeholderfields", "titlefields"};
-        String[] settingsList = {"metadatamappertextfield","labelfields","rootfields"};
+    <%
+        String[] settingsList = {"metadatamappertextfield","labelfields", "descriptionfield", "rootfields","requiredfields"};
         for(String settingComponent : settingsList){
             %>
             <sling:include resource="<%= resource %>" resourceType="<%= resourcePathBase + settingComponent %>"/>
             <%
         }
     %>
-
-    <coral-icon class="delete-field" icon="delete" size="L" tabindex="0" role="button" alt="<%= xssAPI.encodeForHTMLAttr(i18n.get("Delete")) %>" data-target-id="<%= xssAPI.encodeForHTMLAttr(key) %>" data-target="<%= xssAPI.encodeForHTMLAttr("./items/" + key + "@Delete") %>"></coral-icon>
+  <coral-icon class="delete-field" icon="delete" size="L" tabindex="0" role="button" alt="<%= xssAPI.encodeForHTMLAttr(i18n.get("Delete")) %>" data-target-id="<%= xssAPI.encodeForHTMLAttr(key) %>"></coral-icon>
 
 </div>
 <div class="formbuilder-content-properties-rules">
     <label for="field">
     	<span class="rules-label"><%= i18n.get("Field") %></span>
-
-    </label>  
-    <label for="requirement">
-    	<span class="rules-label"><%= i18n.get("Requirement") %></span>
-        <% String requiredField = "v2/requiredfields"; %>
-
-    </label> 
-    <label for="visibililty">    
-        <span class="rules-label"><%= i18n.get("Visibility") %></span>
-        <% String visibilityField = "visibilityfields"; %>
-
-    </label>     
+    </label>
 </div>

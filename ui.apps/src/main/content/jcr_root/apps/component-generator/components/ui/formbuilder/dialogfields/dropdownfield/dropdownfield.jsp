@@ -13,18 +13,18 @@
                    java.util.Iterator" %><%
 
     String key = resource.getName();
-    String resourcePathBase = "dam/gui/coral/components/admin/schemaforms/formbuilder/formfieldproperties/";
+    String resourcePathBase = "component-generator/components/ui/formbuilder/formproperties/";
 %>
 <div class="formbuilder-content-form" role="gridcell">
     <label class="fieldtype">
         <coral-icon alt="" icon="dropdown" size="XS"></coral-icon><%= xssAPI.encodeForHTML(i18n.get("Dropdown Field")) %>
     </label>
-    <sling:include resource="<%=resource%>" resourceType="dam/gui/coral/components/admin/schemaforms/formbuilder/formfields/v2/metadataselect" addSelectors="quiet"/>
+    <sling:include resource="<%=resource%>" resourceType="granite/ui/components/coral/foundation/form/textfield"/>
 </div>
 
 <div class="formbuilder-content-properties dropdownfield">
     <%
-        String[] settingsList = {"metadatamappertextfield","labelfields" };
+        String[] settingsList = {"metadatamappertextfield","labelfields","descriptionfield","requiredfields" };
         for(String settingComponent : settingsList){
             %>
                 <sling:include resource="<%= resource %>" resourceType="<%= resourcePathBase + settingComponent %>"/>
@@ -45,13 +45,13 @@
             <tr class="coral-Table-row">
                 <td class="coral-Table-cell">
                     <label>
-                        <input type="radio" name="choice-options" class="radio-choice-manual manual-radio-propmap-<%= xssAPI.encodeForHTMLAttr(key) %>" >
+                        <input type="radio" name="choice-options" disabled="true" class="radio-choice-manual manual-radio-propmap-<%= xssAPI.encodeForHTMLAttr(key) %>" >
                         <span style="margin-left: 0.5rem;"><%= xssAPI.encodeForHTML(i18n.get("Add Manually")) %></span>
                     </label>
                 </td>
                 <td class="coral-Table-cell" data-foobar="<%= hasJsonPath %>">
                     <label>
-                        <input type="radio" name="choice-options" class="radio-choice-json datasource-radio-propmap-<%= xssAPI.encodeForHTMLAttr(key) %>" key="<%= xssAPI.encodeForHTMLAttr(key) %>" <%= hasJsonPath ? "checked" : "" %>>
+                        <input type="radio" name="choice-options" disabled="true" class="radio-choice-json datasource-radio-propmap-<%= xssAPI.encodeForHTMLAttr(key) %>" key="<%= xssAPI.encodeForHTMLAttr(key) %>" <%= hasJsonPath ? "checked" : "" %>>
                         <span style="margin-left: 0.5rem;"><%= xssAPI.encodeForHTML(i18n.get("Add through data-source")) %></span>
                     </label>
                 </td>
@@ -71,7 +71,7 @@
                     <%--Empty column to align the width with radio buttons--%>
                     <td class="coral-Table-cell" style="border: none !important;background: none !important;"></td>
                     <td class="coral-Table-cell append-dropdown-td">
-                        <button is="coral-button" class="append-dropdown-option" icon="addCircle" iconsize="S"
+                        <button is="coral-button" class="append-dropdown-option add-choice-<%= xssAPI.encodeForHTMLAttr(key) %>" disabled="true" icon="addCircle" iconsize="S"
                                 data-value="<%= xssAPI.encodeForHTMLAttr("template-option-" + key) %>"
                                 data-target="<%= xssAPI.encodeForHTMLAttr("list-" + key) %>"
                                 data-target-parent="<%= xssAPI.encodeForHTMLAttr(key) %>"><%= xssAPI.encodeForHTML(i18n.get("Add Choice")) %>
@@ -84,5 +84,5 @@
         </div>
     </div>
 
-
+<coral-icon class="delete-field" icon="delete" size="L" tabindex="0" role="button" alt="<%= xssAPI.encodeForHTMLAttr(i18n.get("Delete")) %>" data-target-id="<%= xssAPI.encodeForHTMLAttr(key) %>"></coral-icon>
 </div>

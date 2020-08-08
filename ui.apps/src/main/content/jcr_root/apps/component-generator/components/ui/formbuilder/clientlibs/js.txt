@@ -4,7 +4,4 @@ js/field-properties.js
 js/formdetails.js
 js/multifield.js
 js/dropdown.js
-#js/draganddrop.js
-#js/cascadingschema/cascadingcommons.js
-#js/cascadingschema/cascade.js
-#js/add-from-json.js
+js/delete.js

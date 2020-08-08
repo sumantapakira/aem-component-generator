@@ -15,14 +15,14 @@
 </div>
 <div class="formbuilder-content-properties richtextfield">
     <%
-        String[] settingsList = {"metadatamappertextfield","requiredfields"};
+        String[] settingsList = {"metadatamappertextfield","descriptionfield","requiredfields"};
         for(String settingComponent : settingsList){
             %>
             <sling:include resource="<%= resource %>" resourceType="<%= resourcePathBase + settingComponent %>"/>
             <%
         }
     %>
-    <coral-icon class="delete-field" icon="delete" size="L" tabindex="0" role="button" alt="<%= xssAPI.encodeForHTMLAttr(i18n.get("Delete")) %>" data-target-id="<%= xssAPI.encodeForHTMLAttr(key) %>" data-target="<%= xssAPI.encodeForHTMLAttr("./items/" + key + "@Delete") %>"></coral-icon>
+    <coral-icon class="delete-field" icon="delete" size="L" tabindex="0" role="button" alt="<%= xssAPI.encodeForHTMLAttr(i18n.get("Delete")) %>" data-target-id="<%= xssAPI.encodeForHTMLAttr(key) %>"></coral-icon>
 </div>
 <div class="formbuilder-content-properties-rules">
     <label for="field">

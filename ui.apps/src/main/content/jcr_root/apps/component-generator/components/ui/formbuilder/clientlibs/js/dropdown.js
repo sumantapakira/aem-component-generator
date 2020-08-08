@@ -14,6 +14,8 @@
 (function(window, document, Granite, $) {
     var optionsIds = [];
     var itemid;
+    var TAB_BASE_URI = "./cq:dialog/content/items/tabs/items/" ;
+    var REGEX =  /^[^/]+/
 
     $(document).on("click", ".append-dropdown-option", function(e) {
 
@@ -48,12 +50,21 @@
      optionValueCell.appendChild(optionValue);
      row.appendChild(optionValueCell);
 
-        $(".dropdown-manual-table-"+itemid).append(table);
+        var tableId;
+        if($('.dropdown-manual-table-'+itemid).length){
+            $(".dropdown-manual-table-"+itemid).append(table);
+        }else{
+            tableId= $('<div/>').addClass("dropdown-manual-table-"+itemid);
+            $('.choice-values-manual').each(function(){
+                var key = $(this).attr('key');
+                 if($(this).is(":visible") && key === itemid.toString()){
+                    $(this).append(tableId.append(table));
+                }
+            });
 
+        }
 
         $(".dropdown-manual-table-"+itemid).on("change", function(event) {
-
-				 var TAB_BASE_URI = "./cq:dialog/content/items/tabs/items/";
          var originalmappedpropname = $(".propmap-"+itemid).val();
          var mappedpropname = originalmappedpropname;
 		 if(mappedpropname.indexOf("./") === 0){
@@ -76,7 +87,6 @@
 
          if(isValidInput){
              var tabs = $("nav", "#tabs-navigation").find("a:not(#formbuilder-add-tab)");
-             var TAB_BASE_URI = "./cq:dialog/content/items/tabs/items/" ;
              $.each(tabs, function(tabindex, tab) {
         		if($(tab).attr('tabindex') === '0'){
 
@@ -84,23 +94,17 @@
                         var name = $('#dropdown-option-text-'+itemid+'-'+optionsIds[j]).val();
                         var value = $('#dropdown-option-value-'+itemid+'-'+optionsIds[j]).val();
                         var nodeName = name.replace(/\s+/g, '-').toLowerCase();
-                      $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/items/"+nodeName)); 
-                      $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/items/"+nodeName+"/jcr:primaryType","nt:unstructured")); 
-                      $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/items/"+nodeName+"/text",name));
-                      $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/items/"+nodeName+"/value",value));
-
+                      $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/items/"+nodeName, undefined, "manualdrpdwn-"+itemid));
+                      $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/items/"+nodeName+"/jcr:primaryType","nt:unstructured","manualdrpdwn-"+itemid));
+                      $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/items/"+nodeName+"/text",name,"manualdrpdwn-"+itemid));
+                      $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/items/"+nodeName+"/value",value,"manualdrpdwn-"+itemid));
                     }
                     optionsIds = [];
                 }
 		   });
          }
            }); 
-
-
     });
-
-
-
 
 
       function _createHiddenTag(name, value, cssClass) {
@@ -113,10 +117,10 @@
                 "value": value
             });
         }else{
-
         input= $("<input/>").attr({
             "type": "hidden",
-            "name": name
+            "name": name,
+            "class": cssClass
         });
         }
          return input;

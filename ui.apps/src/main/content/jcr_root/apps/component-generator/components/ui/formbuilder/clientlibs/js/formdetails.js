@@ -72,8 +72,7 @@
 
     function _getTabInfo() {
         var tabs = $("nav", "#tabs-navigation").find("a:not(#formbuilder-add-tab)");
-        var BASE = "items/tabs/items/";
-        var TAB_BASE_URI = "./cq:dialog/content/" + BASE;
+        var TAB_BASE_URI = "./cq:dialog/content/items/tabs/items/" ;
         return $.map(tabs, function(tab, tabindex) {
             return {
                 taburi: TAB_BASE_URI + "tab" + (tabindex + 1),
@@ -86,6 +85,19 @@
 
 
     function submitSchemaForm(e) {
+    var isValidInput = false;
+
+    $('.formbuilder-content-properties .field-mvtext-descriptor').each(function(){
+         if($(this).val()){
+            isValidInput = true;
+         }else{
+           isValidInput = false;
+           return;
+         }
+    })
+        if(!isValidInput){
+            return;
+        }
         var $this = $(this);
         var tabsNavigation = $("#tabs-navigation");
 
@@ -143,8 +155,6 @@
                 "nt:unstructured"));
             types.push(_createHiddenTag(TAB_BASE_URI + "/sling:resourceType",
                 "granite/ui/components/coral/foundation/container"));
-            types.push(_createHiddenTag(TAB_BASE_URI + "/granite:rel",
-                "aem-assets-metadata-form-tab"));
              if (tab.tabname.trim() !== "") {
                 types.push(_createHiddenTag(TAB_BASE_URI + "/jcr:title",
                     tab.tabname));
@@ -207,7 +217,7 @@
         });
 
        
-
+        if(isValidInput){
         if (formdata) {
             $.ajax({
                 url: url,
@@ -217,8 +227,6 @@
                 contentType: false,
                 processData: false,
                 success: function() {
-
-
                     _reloadToPrev($this);
                 },
                 error: function() {
@@ -257,6 +265,8 @@
                 }]);
                 }
             });
+
+         }
     }
 
     function _showErrorAndRedirect() {

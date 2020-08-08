@@ -12,6 +12,7 @@
  *
  */
 (function(window, document, Granite, $) {
+var TAB_BASE_URI = "./cq:dialog/content/items/tabs/items/" ;
 
  $(document).on("change", ".multifield-select-item", function(event) {
 		var field = $(".form-fields").find(".ui-selected");
@@ -78,10 +79,9 @@ var numberOfMultifieldItem = parseInt(this.value);
 
 
      $(".multifield-table-"+itemid).on("change", function(event) {
-         var TAB_BASE_URI = "./cq:dialog/content/items/tabs/items/";
-         var originalmappedpropname = $(".propmap-"+itemid).val();
+          var originalmappedpropname = $(".propmap-"+itemid).val();
          var mappedpropname = originalmappedpropname;
-		 if(mappedpropname.indexOf("./") !== 0){
+		 if(mappedpropname.indexOf("./") === 0){
          	mappedpropname = mappedpropname.substring(2);
             } 
 
@@ -103,20 +103,18 @@ var numberOfMultifieldItem = parseInt(this.value);
 
          if(isValidInput){
              var tabs = $("nav", "#tabs-navigation").find("a:not(#formbuilder-add-tab)");
-             var TAB_BASE_URI = "./cq:dialog/content/items/tabs/items/" ;
              $.each(tabs, function(tabindex, tab) {
         		if($(tab).attr('tabindex') === '0'){
                     for(var j=0;j<numberOfMultifieldItem;j++){
-                        console.log($('#multifield-item-name-'+itemid+'-'+j).val());
                         var name = $('#multifield-item-name-'+itemid+'-'+j).val();
                         var label = $('#multifield-item-label-'+itemid+'-'+j).val();
                         var multifieldItemResourcetype = $('#multifield-type-'+itemid+'-'+j).val();
                         var nodeName = name.replace(/\s+/g, '-').toLowerCase();
-					  $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/field/items/column/items/"+nodeName)); 
-                      $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/field/items/column/items/"+nodeName+"/jcr:primaryType","nt:unstructured" )); 
-                      $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/field/items/column/items/"+nodeName+"/name",name )); 
-                      $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/field/items/column/items/"+nodeName+"/fieldLabel",label )); 
-                      $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/field/items/column/items/"+nodeName+"/sling:resourceType",multifieldItemResourcetype ));   
+					  $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/field/items/column/items/"+nodeName, undefined, "multifield-hidden-element-"+itemid));
+                      $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/field/items/column/items/"+nodeName+"/jcr:primaryType","nt:unstructured","multifield-hidden-element-"+itemid ));
+                      $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/field/items/column/items/"+nodeName+"/name",name,"multifield-hidden-element-"+itemid ));
+                      $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/field/items/column/items/"+nodeName+"/fieldLabel",label,"multifield-hidden-element-"+itemid ));
+                      $("#tabs-navigation").append(_createHiddenTag(TAB_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/field/items/column/items/"+nodeName+"/sling:resourceType",multifieldItemResourcetype,"multifield-hidden-element-"+itemid ));
                     }
                 }
 		   });
@@ -140,7 +138,8 @@ var numberOfMultifieldItem = parseInt(this.value);
 
         input= $("<input/>").attr({
             "type": "hidden",
-            "name": name
+            "name": name,
+            "class": cssClass
         });
         }
          return input;

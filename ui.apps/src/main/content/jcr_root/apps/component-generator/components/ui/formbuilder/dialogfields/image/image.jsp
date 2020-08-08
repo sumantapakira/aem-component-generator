@@ -16,7 +16,7 @@
 </div>
 <div class="formbuilder-content-properties imagefield">
     <%
-        String[] settingsList = {"metadatamappertextfield","labelfields","requiredfields"};
+        String[] settingsList = {"metadatamappertextfield","labelfields","descriptionfield", "requiredfields"};
         for(String settingComponent : settingsList){
             %>
             <sling:include resource="<%= resource %>" resourceType="<%= resourcePathBase + settingComponent %>"/>
