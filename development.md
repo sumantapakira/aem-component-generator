@@ -1,4 +1,4 @@
-Please make sure you have added the below dependencies:-
+Please make sure you have added the below dependencies in your own project pom.xml file:-
 
 1. This is required for checking null annotation
 
