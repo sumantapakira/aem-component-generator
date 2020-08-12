@@ -19,7 +19,10 @@ package com.aem.component.generator.core.servlets;
 import com.aem.component.generator.core.commons.Constants;
 import com.aem.component.generator.core.commons.Utils;
 import com.aem.component.generator.core.commons.WorkerThread;
+import com.aem.component.generator.core.handlerbar.SlingModelTemplateSource;
 import com.drew.lang.annotations.NotNull;
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Template;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import org.apache.commons.lang3.StringUtils;
@@ -118,9 +121,10 @@ public class CreateComponentDialogServlet extends SlingAllMethodsServlet {
 
             Multimap map = getPropertyMapAndTypes(document);
             LOG.debug("Multimap : " + map);
-            Runnable slingModel = new WorkerThread(map, coreModelDirPath, title, "java");
+
+            Runnable slingModel = new WorkerThread(map, coreModelDirPath, title, "java", componentPath);
             new Thread(slingModel).start();
-            Runnable reactModel = new WorkerThread(map, reactModuleDirPath, title, "js");
+            Runnable reactModel = new WorkerThread(map, reactModuleDirPath, title, "js", componentPath);
             new Thread(reactModel).start();
 
             JSONObject json = new JSONObject();
@@ -168,10 +172,12 @@ public class CreateComponentDialogServlet extends SlingAllMethodsServlet {
 
         for (int i = 0; i < nl.getLength(); i++) {
             Node currentItem = nl.item(i);
-            String propName = currentItem.getAttributes().getNamedItem("name").getNodeValue();
-            propName = propName.startsWith("./") ? StringUtils.substringAfter(propName, "./") : propName;
-            String resourceType = currentItem.getAttributes().getNamedItem("sling:resourceType").getNodeValue();
-            map.put(propName, resourceType);
+            if(!currentItem.getParentNode().getParentNode().getParentNode().getParentNode().getNodeName().equals("field")) {
+                String propName = currentItem.getAttributes().getNamedItem("name").getNodeValue();
+                propName = propName.startsWith("./") ? StringUtils.substringAfter(propName, "./") : propName;
+                String resourceType = currentItem.getAttributes().getNamedItem("sling:resourceType").getNodeValue();
+                map.put(propName, resourceType);
+            }
         }
         return map;
     }

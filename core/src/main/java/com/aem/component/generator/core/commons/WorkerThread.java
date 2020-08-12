@@ -16,6 +16,7 @@
  */
 package com.aem.component.generator.core.commons;
 
+import com.aem.component.generator.core.handlerbar.SlingModelTemplateSource;
 import com.google.common.collect.Multimap;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ public class WorkerThread implements Runnable{
     String directoryPath = StringUtils.EMPTY;
     String componentName = StringUtils.EMPTY;
     String fileType = StringUtils.EMPTY;
+    String resourceType = StringUtils.EMPTY;
 
     /**
      *
@@ -36,12 +38,13 @@ public class WorkerThread implements Runnable{
      * @param componentName
      * @param fileType
      */
-    public WorkerThread(Multimap propertyMap, String directoryPath, String componentName, String fileType) {
+    public WorkerThread(Multimap propertyMap, String directoryPath, String componentName, String fileType, String resourceType) {
         this.propertyMap = propertyMap;
         this.componentName = componentName;
         this.fileType = fileType;
         this.directoryPath = directoryPath;
-    }
+        this.resourceType = resourceType;
+     }
 
     /**
      * When an object implementing interface <code>Runnable</code> is used
@@ -57,10 +60,11 @@ public class WorkerThread implements Runnable{
     @Override
     public void run() {
         LOG.debug("Thread staring...");
+        Utils createModel = new Utils();
         if(StringUtils.isNotBlank(fileType) && fileType.endsWith("java")) {
-            Utils.createSlingModelClass(directoryPath, componentName);
+            createModel.createSlingModelClass(directoryPath, componentName, resourceType, propertyMap);
         }else if(StringUtils.isNotBlank(fileType) && fileType.endsWith("js")){
-            Utils.createReactComponent(directoryPath, componentName);
+            createModel.createReactComponent(directoryPath, componentName);
         }
     }
 }

@@ -683,7 +683,11 @@ Bundle-DocURL:
                 <type>zip</type>
                 <version>${core.wcm.components.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.github.jknack</groupId>
+                <artifactId>handlebars</artifactId>
+                <version>4.2.0</version>
+            </dependency>    
 
             <!-- Testing -->
             <dependency>

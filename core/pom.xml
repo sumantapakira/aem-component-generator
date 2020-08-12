@@ -44,7 +44,9 @@
                         <configuration>
                             <bnd><![CDATA[
 Import-Package: javax.annotation;version=0.0.0,*
-                                ]]></bnd>
+                                ]]>
+                                -includeresource: handlebars.jar=handlebars-4.2.0.jar;lib:=true
+                                </bnd>
                         </configuration>
                     </execution>
                 </executions>
@@ -87,6 +89,10 @@ Import-Package: javax.annotation;version=0.0.0,*
             <scope>test</scope>
         </dependency>
         <!-- OSGi Dependencies -->
+        <dependency>
+            <groupId>com.github.jknack</groupId>
+            <artifactId>handlebars</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.annotation.versioning</artifactId>
