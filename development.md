@@ -10,7 +10,7 @@ Please make sure you have added the below dependencies in your own project pom.x
               <scope>provided</scope>
            </dependency> 
 
-2. Add this repository in your pom.xml file
+2. Add this repository to your build file m2/settings.xml
 
          <repository>
               <id>jitpack.io</id>
