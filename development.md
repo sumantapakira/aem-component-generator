@@ -20,7 +20,7 @@ Please make sure you have added the below dependencies in your own project pom.x
 3. This is required for reading multifield value without hardcoding the name of each multifield item name. Add this to your pom.xml file
 
             <dependency>
-                <groupId>com.github.sumantapakira.aem-component-generator</groupId>
-                <artifactId>component-generator.core</artifactId>
-                <version>master-dfbb207dc7-1</version>
+                <groupId>com.github.sumantapakira.aem-multifield</groupId>
+                <artifactId>multifield.core</artifactId>
+                <version>master-dbc43663b0-1</version>
             </dependency>
