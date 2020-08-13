@@ -10,10 +10,17 @@ Please make sure you have added the below dependencies in your own project pom.x
               <scope>provided</scope>
            </dependency> 
 
-2. This is required for reading multifield value without hardcoding the name of each multifield item name. 
+2. Add this repository in your pom.xml file
+
+         <repository>
+              <id>jitpack.io</id>
+              <url>https://jitpack.io</url>
+         </repository>
+
+3. This is required for reading multifield value without hardcoding the name of each multifield item name. Add this to your pom.xml file
 
             <dependency>
-                  <groupId>com.aem.component.generator</groupId>
-                  <artifactId>component-generator.core</artifactId>
-                  <version>Latest-version</version>
+                <groupId>com.github.sumantapakira</groupId>
+                <artifactId>aem-component-generator.core</artifactId>
+                <version>Latest-version</version>
             </dependency>
