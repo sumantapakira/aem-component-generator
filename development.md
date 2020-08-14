@@ -42,3 +42,13 @@ If you are using bnd-maven-plugin then add it as follows:
             -includeresource: tui-multifield.jar=multifield.core-master-dbc43663b0-1.jar;lib:=true
          </bnd>
          </configuration>
+         
+         
+ 5. Add this below dependency:
+ 
+           <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.2</version>
+                <scope>compile</scope>
+            </dependency>
