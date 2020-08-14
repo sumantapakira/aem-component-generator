@@ -6,7 +6,7 @@ Please make sure you have added the below dependencies in your own project pom.x
            <dependency>
               <groupId>org.jetbrains</groupId>
               <artifactId>annotations</artifactId>
-              <version>Latest-version</version>
+              <version>16.0.1</version>
               <scope>provided</scope>
            </dependency> 
 
