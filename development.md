@@ -24,3 +24,15 @@ Please make sure you have added the below dependencies in your own project pom.x
                 <artifactId>multifield.core</artifactId>
                 <version>master-dbc43663b0-1</version>
             </dependency>
+
+4. Add it as embed dependency in your core module pom.xml file.
+
+If you are usinf maven-build-plugin then add it as follows:
+
+         <Embed-Dependency>
+           multifield.core
+         </Embed-Dependency>
+ 
+If you are using bnd-maven-plugin then add it as follows:
+
+         -includeresource: tui-multifield.jar=multifield.core-master-dbc43663b0-1.jar;lib:=true
