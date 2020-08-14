@@ -35,4 +35,10 @@ If you are usinf maven-build-plugin then add it as follows:
  
 If you are using bnd-maven-plugin then add it as follows:
 
-         -includeresource: tui-multifield.jar=multifield.core-master-dbc43663b0-1.jar;lib:=true
+         <configuration>
+         <bnd><![CDATA[
+            Import-Package: javax.annotation;version=0.0.0,*
+                                ]]>
+            -includeresource: tui-multifield.jar=multifield.core-master-dbc43663b0-1.jar;lib:=true
+         </bnd>
+         </configuration>
