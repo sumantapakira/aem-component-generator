@@ -5,6 +5,7 @@
  *  This project also helps Frontend developers who does not have knowledge about AEM backend component, now they can create Dialog and start implemting Frontend logic whithout waiting for Backend developers dependency.
  
 Demo Part-1 : https://youtu.be/PecIIKGGLpQ 
+Demo part-2 : https://youtu.be/26eIVbmyTWU
  
 
 ## Work in progress
