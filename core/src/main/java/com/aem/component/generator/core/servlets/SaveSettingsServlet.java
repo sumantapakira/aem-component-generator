@@ -49,7 +49,7 @@ public class SaveSettingsServlet extends SlingAllMethodsServlet {
     private static final Logger LOG = LoggerFactory.getLogger(SaveSettingsServlet.class);
     @Override
     protected void doPost(final SlingHttpServletRequest req,
-                         final SlingHttpServletResponse resp) throws ServletException, IOException {
+                          final SlingHttpServletResponse resp) throws ServletException, IOException {
         final Resource resource = req.getResource();
         if(StringUtils.isBlank(req.getParameter("projectpath"))){
             return;
@@ -108,7 +108,7 @@ public class SaveSettingsServlet extends SlingAllMethodsServlet {
 
     @Override
     protected void doGet(final SlingHttpServletRequest req,
-                          final SlingHttpServletResponse resp) throws ServletException, IOException {
+                         final SlingHttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
     }
 }

@@ -20,6 +20,7 @@ public class Constants {
     public static final String DEFAULT_LOCAL_ADMIN_USER_NAME = "admin";
     public static final String DEFAULT_LOCAL_ADMIN_USER_PASSWORD = "admin";
     public static final String FORWARD_SLASH = "/";
+    public static final String UNDERSCORE = "_";
     public static final String VAR_SETTING_NODE = "/var/component-generator/settings";
     public static final String DOT = ".";
     public static final String COLON = ":";
@@ -29,7 +30,20 @@ public class Constants {
     public static final String CONTENT_XML_NAME = ".content.xml";
     public static final String DASH_REGEX= "-(?![\\[\\{\\(])";
     public static final String HTL_TEMPLATE= "<div data-sly-test=\"${wcmmode.edit}\">Configure ${component.properties.jcr:title}</div>";
-    public static final String SLING_TEMPLATE= "package %s ; \n\n public class %s { \n\n " +
-            "String var=\" Hello World, Coming Soon\";\n\n}";
     public static final String REACT_TEMPLATE= "Coming soon...";
+    public static final String SLING_MODEL_HANDLEBAR_TEMPLATE_LOCATION= "/apps/component-generator/templates/handlebar/slingmodel.hbs";
+    public static final String SLING_MODEL_INTERFACE_HANDLEBAR_TEMPLATE_LOCATION= "/apps/component-generator/templates/handlebar/interface.hbs";
+    public static final String HTL_HANDLEBAR_TEMPLATE_LOCATION= "/apps/component-generator/templates/handlebar/htl.hbs";
+    public static final String PACKAGE_INFO_HANDLEBAR_TEMPLATE_LOCATION= "/apps/component-generator/templates/handlebar/package-info.hbs";
+    public static final String REACT_SIMPLE_HANDLEBAR_TEMPLATE_LOCATION= "/apps/component-generator/templates/handlebar/reactmodel.hbs";
+    public static final String REACT_CONTAINER_HANDLEBAR_TEMPLATE_LOCATION= "/apps/component-generator/templates/handlebar/reactcontainermodel.hbs";
+    public static final String MULTIFIELD_VALUES_PATH = "/items/column/items/";
+    public static final String RT_MULTIFIELD = "granite/ui/components/coral/foundation/form/multifield";
+    public static final String RT_CHECKBOX = "granite/ui/components/coral/foundation/form/checkbox";
+    public static final String RT_TEXTFIELD = "granite/ui/components/coral/foundation/form/textfield";
+    public static final String RT_FILEUPLOAD = "cq/gui/components/authoring/dialog/fileupload";
+    public static final String RT_CONTAINER = "granite/ui/components/coral/foundation/container";
+    public static final String RT_RICHTEXT = "cq/gui/components/authoring/dialog/richtext";
+    public static final String RT_PATHFIELD = "granite/ui/components/coral/foundation/form/pathfield";
+    public static final String RT_SELECTFIELD = "granite/ui/components/coral/foundation/form/select";
 }

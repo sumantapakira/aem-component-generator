@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:rep="internal"
+    jcr:primaryType="rep:SystemUser"
+    jcr:uuid="7f72bea4-3c35-32b7-8a97-1eeed2f0ffdb"
+    rep:authorizableId="component-generator"
+    rep:principalName="component-generator"
+    deleteAuthorizable="component-generator"
+    memberAction="memberOf"
+    memberEntry="administrators"/>

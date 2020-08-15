@@ -12,31 +12,25 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
-
+--%><%
 %><%@include file="/libs/granite/ui/global.jsp" %><%
 %><%@ page session="false" contentType="text/html" pageEncoding="utf-8"
          import="com.adobe.granite.ui.components.formbuilder.FormResourceManager,
          		 org.apache.sling.api.resource.Resource,
          		 org.apache.sling.api.resource.ValueMap,
                  com.adobe.granite.ui.components.Config,
-         		 java.util.HashMap" %><%
-    Config cfg = new Config(resource);
-    ValueMap fieldProperties = resource.adaptTo(ValueMap.class);
-    String key = resource.getName();
-	String resourcePathBase = "component-generator/components/ui/formbuilder/formproperties/";
-%>
-<div class="formbuilder-content-form" role="gridcell">
-    <sling:include resource="<%= resource %>" resourceType="granite/ui/components/coral/foundation/form/checkbox"/>
-</div>
-<div class="formbuilder-content-properties checkboxfield">
-<%
-        String[] settingsList = {"metadatamappertextfield", "textfield"};
-        for(String settingComponent : settingsList){
-            %>
-            <sling:include resource="<%= resource %>" resourceType="<%= resourcePathBase + settingComponent %>"/>
-            <%
-        }
-%>
-<coral-icon class="delete-field" icon="delete" size="L" tabindex="0" role="button" alt="<%= xssAPI.encodeForHTMLAttr(i18n.get("Delete")) %>" data-target-id="<%= xssAPI.encodeForHTMLAttr(key) %>"></coral-icon>
-</div>
+         		 java.util.HashMap"%><%
 
+    ValueMap fieldProperties = resource.adaptTo(ValueMap.class);
+    Config cfg = new Config(resource);
+
+    HashMap<String, Object> values = new HashMap<String, Object>();
+    values.put("granite:class", "field-checkboxtext-descriptor fieldtextmap-"+resource.getName());
+    values.put("fieldLabel",   i18n.get("Checkbox Text"));
+    values.put("emptyText",    i18n.get("Enter Checkbox Text"));
+
+
+    FormResourceManager formResourceManager = sling.getService(FormResourceManager.class);
+    Resource labelFieldResource = formResourceManager.getDefaultPropertyFieldResource(resource, values);
+
+%><sling:include resource="<%= labelFieldResource %>" resourceType="granite/ui/components/coral/foundation/form/textfield"/>

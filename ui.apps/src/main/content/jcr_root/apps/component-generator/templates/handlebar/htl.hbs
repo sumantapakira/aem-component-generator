@@ -1,0 +1,35 @@
+<!--
+  Copyright 2020 Sumanta Pakira
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+-->
+{{#if isContainer}}
+<div class="cmp-text" data-sly-use.model="{{modelLocation}}"
+     data-placeholder-text="${wcmmode.edit && 'Please add components here' @ i18n}">
+     <sly data-sly-resource="${resource.path @ resourceType='wcm/foundation/components/parsys/newpar', appendPath='/*', decorationTagName='div', cssClassName='new section aem-Grid-newComponent'}"
+              data-sly-test="${(wcmmode.edit || wcmmode.preview)}"></sly>
+ {{else}}
+   <div class="cmp-text" data-sly-use.model="{{modelLocation}}">
+ {{/if}}
+     {{#propertyLists}}
+        <div data-sly-test="${model.{{.}} }"> ${model.{{.}} } </div>
+     {{/propertyLists}}
+     {{#multiValueLists}}
+             <ul data-sly-list="${ model.multiField{{.}} }">
+                   {{#multiFieldItemLists}}
+                      <li data-sly-test="${ item.{{.}} }"> ${item.{{.}} }</li>
+                   {{/multiFieldItemLists}}
+             </ul>
+     {{/multiValueLists}}
+</div>
+<div data-sly-test="${wcmmode.edit}" class="cq-placeholder" data-emptytext="Configure ${component.properties.jcr:title}"></div>

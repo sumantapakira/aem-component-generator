@@ -1,0 +1,31 @@
+import React from 'react';
+import {Page, MapTo, withComponentMappingContext , ResponsiveGrid} from "@adobe/cq-react-editable-components";
+
+{{#if isContainer}}
+class {{className}} extends {{inheritedComponent}} {
+
+    render(){
+    var propHint = {};
+    propHint['data-placeholder-hint' ] = 'Drag Components here';
+
+    if(!this.props.isInEditor){
+       for (var key in propHint) {
+           if (propHint.hasOwnProperty(key)) {
+               propHint[key] = null;
+           }
+       }
+    }
+    return(
+            <section {...propHint} className="some-class">
+                {super.childComponents}
+                {super.placeholderComponent}
+                {{#propertyLists}}
+                  {this.props.{{.}} }
+                 {{/propertyLists}}
+            </section>
+            )
+    }
+}
+
+MapTo('{{resourceType}}')({{className}});
+{{/if}}

@@ -28,6 +28,7 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.scripting.SlingScriptHelper;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.propertytypes.ServiceDescription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,9 @@ import java.util.List;
 @Component(
         immediate = true,
         service = ComponentListService.class,
-        configurationPid = "com.aem.component.generator.core.servlets.ComponentListServiceImpl")
+        configurationPid = "com.aem.component.generator.core.servlets.ComponentListServiceImpl",
+        configurationPolicy= ConfigurationPolicy.OPTIONAL,
+        enabled = true)
 @ServiceDescription("Get list of all available components")
 public class ComponentListServiceImpl implements ComponentListService{
     private static final Logger LOG = LoggerFactory.getLogger(ComponentListServiceImpl.class);
