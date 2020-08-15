@@ -1,0 +1,21 @@
+import React,{Component} from 'react';
+import {Page, MapTo, withComponentMappingContext} from "@adobe/cq-react-editable-components";
+
+{{#if isNonContainer}}
+const {{className}}EditConfig = {
+    emptyLabel: 'Configure {{componentName}}',
+};
+
+class {{className}} extends {{inheritedComponent}}{
+render() {
+ return (
+ <div className="some-class">
+ {{#propertyLists}}
+ {this.props.{{.}} }
+ {{/propertyLists}}
+ </div>
+ );
+ }
+}
+MapTo('{{resourceType}}')({{className}}, {{className}}EditConfig);
+{{/if}}

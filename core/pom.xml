@@ -20,7 +20,7 @@
     <parent>
         <groupId>com.aem.component.generator</groupId>
         <artifactId>component-generator</artifactId>
-        <version>1.2-SNAPSHOT</version>
+        <version>1.3-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>component-generator.core</artifactId>
@@ -45,8 +45,9 @@
                             <bnd><![CDATA[
 Import-Package: javax.annotation;version=0.0.0,*
                                 ]]>
-                                -includeresource: handlebars.jar=handlebars-4.2.0.jar;lib:=true
-                                </bnd>
+                                -includeresource: handlebars.jar=handlebars-4.2.0.jar,tui-multifield.jar=multifield.core-master-dbc43663b0-1.jar;lib:=true,
+                                 Export-Package:com.aem.component.generator.core.*
+                            </bnd>
                         </configuration>
                     </execution>
                 </executions>
@@ -80,6 +81,14 @@ Import-Package: javax.annotation;version=0.0.0,*
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.hbs</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
     <dependencies>
@@ -89,7 +98,7 @@ Import-Package: javax.annotation;version=0.0.0,*
             <scope>test</scope>
         </dependency>
         <!-- OSGi Dependencies -->
-        <dependency>
+         <dependency>
             <groupId>com.github.jknack</groupId>
             <artifactId>handlebars</artifactId>
         </dependency>
@@ -163,6 +172,14 @@ Import-Package: javax.annotation;version=0.0.0,*
             <groupId>org.apache.sling</groupId>
             <artifactId>org.apache.sling.models.api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+         </dependency>
+        <dependency>
+            <groupId>com.github.sumantapakira.aem-multifield</groupId>
+            <artifactId>multifield.core</artifactId>
+        </dependency>
         <!-- Testing -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -189,5 +206,6 @@ Import-Package: javax.annotation;version=0.0.0,*
             <artifactId>io.wcm.testing.aem-mock.junit5</artifactId>
             <scope>test</scope>
         </dependency>
+       
     </dependencies>
 </project>

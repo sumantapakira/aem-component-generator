@@ -14,7 +14,7 @@
  * limitations under the License.
  * #L%
  */
-package com.aem.component.generator.core.commons;
+package com.aem.component.generator.core.multifield;
 
 
 import org.apache.commons.lang3.StringUtils;
@@ -33,6 +33,7 @@ import java.util.LinkedHashMap;
 
 public class MultiFieldMap {
 
+    private static final String MULTIFIELD_VALUES_PATH = "/items/column/items/";
     protected Node node;
     protected Node multiFieldValueNode;
     protected String multiFieldNameProperty;
@@ -116,7 +117,7 @@ public class MultiFieldMap {
             result = fieldConfigNodes.nextNode();
         }
         if (result != null) {
-            multiFieldValueNodes = result.getPath() + Constants.MULTIFIELD_VALUES_PATH;
+            multiFieldValueNodes = result.getPath() + MULTIFIELD_VALUES_PATH;
             multiFieldValueNode = workingSession.getNode(multiFieldValueNodes);
             NodeIterator multiFieldItr = multiFieldValueNode.getNodes();
             int numberOfProperty = 0;

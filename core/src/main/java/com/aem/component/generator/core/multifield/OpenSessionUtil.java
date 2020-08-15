@@ -14,7 +14,7 @@
  * limitations under the License.
  * #L%
  */
-package com.aem.component.generator.core.commons;
+package com.aem.component.generator.core.multifield;
 
 import com.google.common.collect.ImmutableMap;
 import org.apache.sling.api.resource.LoginException;

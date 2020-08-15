@@ -69,19 +69,14 @@ public class SlingModelTemplateSource extends AbstractTemplateSource {
 
     @Override
     public String content(Charset arg0) throws IOException {
-        Reader reader = null;
         int bufferSize = 1024;
-        try {
-            reader = reader();
+        try(Reader reader = reader()) {
             char[] cbuf = new char[1024];
             StringBuilder sb = new StringBuilder();
             int len;
             while ((len = reader.read(cbuf, 0, 1024)) != -1)
                 sb.append(cbuf, 0, len);
             return sb.toString();
-        } finally {
-            if (reader != null)
-                reader.close();
         }
 
     }

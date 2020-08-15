@@ -19,10 +19,10 @@ package com.aem.component.generator.core.servlets;
 import com.aem.component.generator.core.commons.Constants;
 import com.aem.component.generator.core.commons.Utils;
 import com.aem.component.generator.core.commons.WorkerThread;
-import com.aem.component.generator.core.handlerbar.SlingModelTemplateSource;
+import com.aem.component.generator.core.models.HTLModel;
+import com.aem.component.generator.core.models.ReactModel;
+import com.aem.component.generator.core.models.SlingModel;
 import com.drew.lang.annotations.NotNull;
-import com.github.jknack.handlebars.Handlebars;
-import com.github.jknack.handlebars.Template;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import org.apache.commons.lang3.StringUtils;
@@ -61,6 +61,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Component(service = Servlet.class, property = {"sling.servlet.methods=" + HttpConstants.METHOD_POST,
         "sling.servlet.paths=" + "/bin/servets/createcomponentdialog", "sling.servlet.extensions=json"})
@@ -72,6 +74,41 @@ public class CreateComponentDialogServlet extends SlingAllMethodsServlet {
 
     @Reference
     ComponentListService componentListService;
+
+    /**
+     * @param componentName
+     * @param groupName
+     * @param resourceSuperType
+     * @param isContainer
+     * @param filePath
+     */
+    private static void createComponentXml(@NotNull String componentName, String groupName, String resourceSuperType, String isContainer, @NotNull String filePath) {
+        try {
+            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+            Element rootElement = document.createElement("jcr:root");
+            rootElement.setAttribute("xmlns:sling", "http://sling.apache.org/jcr/sling/1.0");
+            rootElement.setAttribute("xmlns:cq", "http://www.day.com/jcr/cq/1.0");
+            rootElement.setAttribute("xmlns:jcr", "http://www.jcp.org/jcr/1.0");
+            rootElement.setAttribute("xmlns:nt", "http://www.jcp.org/jcr/nt/1.0");
+
+            rootElement.setAttribute(JcrConstants.JCR_PRIMARYTYPE, "cq:Component");
+            rootElement.setAttribute(com.day.cq.commons.jcr.JcrConstants.JCR_TITLE, componentName);
+            if (StringUtils.isNotBlank(groupName)) {
+                rootElement.setAttribute("componentGroup", groupName);
+            }
+            if (StringUtils.isNotBlank(resourceSuperType)) {
+                rootElement.setAttribute("sling:resourceSuperType", resourceSuperType);
+            }
+            if (StringUtils.isNotBlank(isContainer) && Boolean.parseBoolean(isContainer)) {
+                rootElement.setAttribute("cq:isContainer", "{Boolean}true");
+            }
+            document.appendChild(rootElement);
+            Utils.transformDomToFile(document, filePath);
+
+        } catch (ParserConfigurationException e) {
+            LOG.error("Error:", e);
+        }
+    }
 
     @Override
     protected void doPost(final SlingHttpServletRequest req,
@@ -122,10 +159,19 @@ public class CreateComponentDialogServlet extends SlingAllMethodsServlet {
             Multimap map = getPropertyMapAndTypes(document);
             LOG.debug("Multimap : " + map);
 
-            Runnable slingModel = new WorkerThread(map, coreModelDirPath, title, "java", componentPath);
-            new Thread(slingModel).start();
-            Runnable reactModel = new WorkerThread(map, reactModuleDirPath, title, "js", componentPath);
-            new Thread(reactModel).start();
+            SlingModel slingModelInfo = new SlingModel(map, "java", coreModelDirPath,  componentPath, title);
+            Runnable slingModel = new WorkerThread(slingModelInfo);
+
+            String componentPathWithoutSlash = componentPath.startsWith("/") ? StringUtils.substring(componentPath, 1) : componentPath;
+            List<String> multifieldItemList = getMultiFieldItemList(document);
+            String userUIAppsDirectoryWithoutSlash = userUIAppsDirectory + componentPathWithoutSlash;
+            HTLModel htlModelInfo = new HTLModel(map, "html", userUIAppsDirectoryWithoutSlash, componentPath, title, multifieldItemList,coreModelDirPath);
+            Runnable updateHtl = new WorkerThread(htlModelInfo);
+
+            ReactModel reactModelInfo = new ReactModel(map,"js",reactModuleDirPath,componentPath, title, userUIAppsDirectoryWithoutSlash);
+            Runnable reactModel = new WorkerThread(reactModelInfo);
+
+            startThreads(slingModel, reactModel, updateHtl);
 
             JSONObject json = new JSONObject();
             json.put("result", "ok");
@@ -136,6 +182,48 @@ public class CreateComponentDialogServlet extends SlingAllMethodsServlet {
             resp.getWriter().write("Error");
         }
 
+    }
+
+    /**
+     *
+     * @param slingModel
+     * @param reactModel
+     * @param updateHtl
+     */
+    private void startThreads(Runnable slingModel, Runnable reactModel, Runnable updateHtl) {
+        ExecutorService executorService = Executors.newFixedThreadPool(4);
+
+        executorService.execute(slingModel);
+        executorService.execute(reactModel);
+        executorService.execute(updateHtl);
+
+        executorService.shutdown();
+    }
+
+    /**
+     *
+     * @param document
+     * @return
+     */
+    private List<String> getMultiFieldItemList(Document document) {
+        NodeList nList = document.getElementsByTagName("field");
+        List<String> list = new ArrayList<String>();
+
+        for (int temp = 0; temp < nList.getLength(); temp++) {
+            Node nNode = nList.item(temp);
+            Node aNode = Utils.getNode(nNode);
+            NodeList parentList = aNode.getParentNode().getChildNodes();
+            for (int temp1 = 0; temp1 < parentList.getLength(); temp1++) {
+                Node nNode1 = parentList.item(temp1);
+                if (nNode1.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode1;
+                    String propName = eElement.hasAttribute("name") ? eElement.getAttribute("name") : StringUtils.EMPTY;
+                    list.add(propName);
+                }
+            }
+
+        }
+        return list;
     }
 
     /**
@@ -172,55 +260,41 @@ public class CreateComponentDialogServlet extends SlingAllMethodsServlet {
 
         for (int i = 0; i < nl.getLength(); i++) {
             Node currentItem = nl.item(i);
-            if(!currentItem.getParentNode().getParentNode().getParentNode().getParentNode().getNodeName().equals("field")) {
+            if (!currentItem.getParentNode().getParentNode().getParentNode().getParentNode().getNodeName().equals("field")) {
                 String propName = currentItem.getAttributes().getNamedItem("name").getNodeValue();
                 propName = propName.startsWith("./") ? StringUtils.substringAfter(propName, "./") : propName;
                 String resourceType = currentItem.getAttributes().getNamedItem("sling:resourceType").getNodeValue();
                 map.put(propName, resourceType);
             }
         }
+
+        findMultiField(map, document);
+
         return map;
+    }
+
+    /**
+     *
+     * @param map
+     * @param document
+     */
+    private void findMultiField(Multimap<String, String> map, Document document) {
+        NodeList nList = document.getElementsByTagName("field");
+        for (int temp = 0; temp < nList.getLength(); temp++) {
+            Node nNode = nList.item(temp);
+            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element eElement = (Element) nNode;
+                String propName = eElement.getAttribute("name");
+                propName = propName.startsWith("./") ? StringUtils.substringAfter(propName, "./") : propName;
+                map.put(propName, Constants.RT_MULTIFIELD);
+            }
+        }
     }
 
     @Override
     protected void doGet(final SlingHttpServletRequest req,
                          final SlingHttpServletResponse resp) throws ServletException, IOException {
         doPost(req, resp);
-    }
-
-    /**
-     * @param componentName
-     * @param groupName
-     * @param resourceSuperType
-     * @param isContainer
-     * @param filePath
-     */
-    private static void createComponentXml(@NotNull String componentName, String groupName, String resourceSuperType, String isContainer, @NotNull String filePath) {
-        try {
-            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-            Element rootElement = document.createElement("jcr:root");
-            rootElement.setAttribute("xmlns:sling", "http://sling.apache.org/jcr/sling/1.0");
-            rootElement.setAttribute("xmlns:cq", "http://www.day.com/jcr/cq/1.0");
-            rootElement.setAttribute("xmlns:jcr", "http://www.jcp.org/jcr/1.0");
-            rootElement.setAttribute("xmlns:nt", "http://www.jcp.org/jcr/nt/1.0");
-
-            rootElement.setAttribute(JcrConstants.JCR_PRIMARYTYPE, "cq:Component");
-            rootElement.setAttribute(com.day.cq.commons.jcr.JcrConstants.JCR_TITLE, componentName);
-            if (StringUtils.isNotBlank(groupName)) {
-                rootElement.setAttribute("componentGroup", groupName);
-            }
-            if (StringUtils.isNotBlank(resourceSuperType)) {
-                rootElement.setAttribute("sling:resourceSuperType", resourceSuperType);
-            }
-            if (StringUtils.isNotBlank(isContainer) && Boolean.parseBoolean(isContainer)) {
-                rootElement.setAttribute("cq:isContainer", "{Boolean}true");
-            }
-            document.appendChild(rootElement);
-            Utils.transformDomToFile(document, filePath);
-
-        } catch (ParserConfigurationException e) {
-            LOG.error("Error:", e);
-        }
     }
 
 

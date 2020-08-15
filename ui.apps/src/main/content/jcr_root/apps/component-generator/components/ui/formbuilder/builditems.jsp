@@ -59,7 +59,7 @@
 	                    <script class="field-properties" type="text/x-handlebars-template">
                         <sling:include resource="<%= fieldTemplateResource %>"
                                        resourceType="component-generator/components/ui/formbuilder/dialogfields/textfield" />
-                    </script>
+                        </script>
 	                </li>
 
                     <li class="field" data-fieldtype="text">
@@ -67,7 +67,7 @@
 	                    <script class="field-properties" type="text/x-handlebars-template">
                         <sling:include resource="<%= fieldTemplateResource %>"
                                        resourceType="component-generator/components/ui/formbuilder/dialogfields/richtextfield" />
-                    </script>
+                        </script>
 	                </li>
 
 	                <li class="field" data-fieldtype="text">
@@ -75,33 +75,40 @@
 	                    <script class="field-properties" type="text/x-handlebars-template">
                         <sling:include resource="<%= fieldTemplateResource %>"
                                        resourceType="component-generator/components/ui/formbuilder/dialogfields/pathfield" />
-                    </script>
-	                </li>
+                        </script>
+	                 </li>
 
                      <li class="field" data-fieldtype="text">
 	                    <div class="formbuilder-template-title"><coral-icon icon="multipleAdd" alt="" size="M"></coral-icon><span><%= i18n.get("Multifield") %></span></div>
 	                    <script class="field-properties" type="text/x-handlebars-template">
                         <sling:include resource="<%= fieldTemplateResource %>"
                                        resourceType="component-generator/components/ui/formbuilder/dialogfields/multifield" />
-                    </script>
-	                </li>
+                        </script>
+	                 </li>
 
                      <li class="field" data-fieldtype="text">
 	                    <div class="formbuilder-template-title"><coral-icon icon="image" alt="" size="M"></coral-icon><span><%= i18n.get("Image") %></span></div>
 	                    <script class="field-properties" type="text/x-handlebars-template">
                         <sling:include resource="<%= fieldTemplateResource %>"
                                        resourceType="component-generator/components/ui/formbuilder/dialogfields/image" />
-                    </script>
-	                </li>
+                        </script>
+	                 </li>
 
-                     <li class="field" data-fieldtype="dropdown">
+                    <li class="field" data-fieldtype="dropdown">
 	                    <div class="formbuilder-template-title"><coral-icon icon="dropdown" alt="" size="M"></coral-icon><span><%= i18n.get("Dropdown") %></span></div>
 	                    <script class="field-properties" type="text/x-handlebars-template">
                         <sling:include resource="<%= fieldTemplateResource %>"
                                        resourceType="component-generator/components/ui/formbuilder/dialogfields/dropdownfield" />
-                    </script>
-
+                        </script>
 	                </li>
+
+	                <li class="field" data-fieldtype="text">
+                     	<div class="formbuilder-template-title"><coral-icon icon="dropdown" alt="" size="M"></coral-icon><span><%= i18n.get("Checkbox") %></span></div>
+                     	<script class="field-properties" type="text/x-handlebars-template">
+                        <sling:include resource="<%= fieldTemplateResource %>"
+                             resourceType="component-generator/components/ui/formbuilder/dialogfields/checkboxfield" />
+                        </script>
+                    </li>
 	               
                 </ul>
 	        </coral-panel>

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2018 Adobe Systems Incorporated
+ *  Copyright 2015 Adobe Systems Incorporated
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,27 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+@Version("1.0")
+package com.aem.component.generator.core.multifield;
 
-@import (once) "/libs/wcm/foundation/clientlibs/grid/grid_base.less";
-
-/* maximum amount of grid cells to be provided */
-@max_col: 12;
-
-/* default breakpoint */
-.aem-Grid {
-  .generate-grid(default, @max_col);
-}
-
-/* phone breakpoint */
-@media (max-width: 650px) {
-  .aem-Grid {
-    .generate-grid(phone, @max_col);
-  }
-}
-
-/* tablet breakpoint */
-@media (min-width: 651px) and (max-width: 1200px) {
-  .aem-Grid {
-    .generate-grid(tablet, @max_col);
-  }
-}
+import org.osgi.annotation.versioning.Version;

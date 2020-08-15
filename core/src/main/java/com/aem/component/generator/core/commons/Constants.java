@@ -33,6 +33,10 @@ public class Constants {
     public static final String REACT_TEMPLATE= "Coming soon...";
     public static final String SLING_MODEL_HANDLEBAR_TEMPLATE_LOCATION= "/apps/component-generator/templates/handlebar/slingmodel.hbs";
     public static final String SLING_MODEL_INTERFACE_HANDLEBAR_TEMPLATE_LOCATION= "/apps/component-generator/templates/handlebar/interface.hbs";
+    public static final String HTL_HANDLEBAR_TEMPLATE_LOCATION= "/apps/component-generator/templates/handlebar/htl.hbs";
+    public static final String PACKAGE_INFO_HANDLEBAR_TEMPLATE_LOCATION= "/apps/component-generator/templates/handlebar/package-info.hbs";
+    public static final String REACT_SIMPLE_HANDLEBAR_TEMPLATE_LOCATION= "/apps/component-generator/templates/handlebar/reactmodel.hbs";
+    public static final String REACT_CONTAINER_HANDLEBAR_TEMPLATE_LOCATION= "/apps/component-generator/templates/handlebar/reactcontainermodel.hbs";
     public static final String MULTIFIELD_VALUES_PATH = "/items/column/items/";
     public static final String RT_MULTIFIELD = "granite/ui/components/coral/foundation/form/multifield";
     public static final String RT_CHECKBOX = "granite/ui/components/coral/foundation/form/checkbox";

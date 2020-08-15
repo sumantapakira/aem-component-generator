@@ -37,6 +37,31 @@
 		});
    });
 
+    /*
+    * Handle Checkbox field
+    */
+    $(document).on("change", ".field-checkboxtext-descriptor", function(event) {
+     console.log("1111")
+        var field = $(".form-fields").find(".ui-selected");
+        var itemid = field.data("id");
+        var value = this.value;
+        var tabs = $("nav", "#tabs-navigation").find("a:not(#formbuilder-add-tab)");
+
+        var mappedpropname = $(".propmap-"+itemid).val();
+        if(mappedpropname.indexOf("./") === 0){
+			mappedpropname = mappedpropname.substring(2);
+        }
+         $.each(tabs, function(tabindex, tab) {
+        		if($(tab).attr('tabindex') === '0'){
+        		  if($(".fieldcheckboxtext-"+itemid).length > 0){
+        		    $(".fieldcheckboxtext-"+itemid).attr("value",value);
+        		  }else{
+                    $("#tabs-navigation").append(_createHiddenTag(DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+mappedpropname+"/text", value, "fieldcheckboxtext-"+itemid));
+                   }
+                }
+		});
+   });
+
        $(document).on("change", ".field-descriptor-hint", function(event) {
            var field = $(".form-fields").find(".ui-selected");
            var itemid = field.data("id");
@@ -183,6 +208,8 @@
 			resourceType = "cq/gui/components/authoring/dialog/fileupload";
         }else if(parseInt(field.children(".richtextfield").length)>0 ){
 			resourceType = "cq/gui/components/authoring/dialog/richtext";
+        }else if(parseInt(field.children(".checkboxfield").length)>0 ){
+         	resourceType = "granite/ui/components/coral/foundation/form/checkbox";
         }
 
         var itemid = field.data("id");
@@ -209,6 +236,8 @@
                     elementType = "richtextfield";
                  }else if(parseInt(field.children(".pathfield").length)>0){
                     elementType = "pathfield";
+                 }else if(parseInt(field.children(".checkboxfield").length)>0){
+                    elementType = "checkboxfield";
                  }
 
                  if($('#container-'+itemid).length){
@@ -230,8 +259,10 @@
    function appendMandaroryElements(containerId, tabindex, propertynodename, val, resourceType, elementType){
         $("#tabs-navigation").append(containerId.append(_createHiddenTag(DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+propertynodename+"/")));
         $("#tabs-navigation").append(containerId.append(_createHiddenTag(DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+propertynodename+"/jcr:primaryType", "nt:unstructured")));
-        $("#tabs-navigation").append(containerId.append(_createHiddenTag(DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+propertynodename+"/name", val, "propnameclass")));
 
+        if(elementType !== "multifield" && elementType !== "imagefield"){
+          $("#tabs-navigation").append(containerId.append(_createHiddenTag(DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+propertynodename+"/name", val, "propnameclass")));
+        }
         if(elementType==="imagefield"){
             $("#tabs-navigation").append(containerId.append(_createHiddenTag(DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+propertynodename+"/name", val + "/file")));
         }
@@ -251,8 +282,14 @@
                             break;
          case "pathfield": addDefaultRootPathToPathFieldElement(containerId, tabindex, propertynodename);
                             break;
+         case "checkboxfield": addCheckboxTextElement(containerId, tabindex, propertynodename);
+                            break;
         }
  }
+
+    function addCheckboxTextElement(containerId, tabindex, propertynodename){
+        $("#tabs-navigation").append(containerId.append(_createHiddenTag(DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+propertynodename+"/value", true)));
+    }
 
     function addRichTextElement(containerId, tabindex, propertynodename){
           $("#tabs-navigation").append(containerId.append(_createHiddenTag(DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+propertynodename+"/useFixedInlineToolbar", true)));
@@ -351,6 +388,7 @@
             updateContetRootElement(propertynodename, tabindex, itemid);
             updateManualDropDownElement(propertynodename, tabindex, itemid);
             updateMultifieldHiddenElement(propertynodename,tabindex,itemid);
+            updateCheckboxTextElement(propertynodename,tabindex,itemid);
     }
 
     function enableDropDownRadioElement(itemid){
@@ -395,7 +433,6 @@
      }
 
      function updateMultifieldHiddenElement(propertynodename,tabindex,itemid){
-     console.log(tabindex)
             var pattern = "./cq:dialog/content/items/tabs/items/tab"+ (tabindex + 1) +"/items/columns/items/column/items/";
                 $('.multifield-hidden-element-'+itemid).each(function(){
                      var oldName = $(this).attr('name');
@@ -432,6 +469,12 @@
                 $(".pathfield-rootcontent-"+itemid).attr("name",DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+propertynodename+"/rootPath");
            }
    }
+
+   function updateCheckboxTextElement(propertynodename, tabindex, itemid){
+              if($(".fieldcheckboxtext-"+itemid).length > 0){
+                   $(".fieldcheckboxtext-"+itemid).attr("name",DIALOG_BASE_URI + "tab" + (tabindex + 1) + "/items/columns/items/column/items/"+propertynodename+"/text");
+              }
+      }
 
      function _createHiddenTag(name, value, cssClass) {
          var input;

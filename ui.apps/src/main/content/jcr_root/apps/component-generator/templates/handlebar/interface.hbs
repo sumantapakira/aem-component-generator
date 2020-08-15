@@ -20,6 +20,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 import org.jetbrains.annotations.NotNull;
 {{#if isMultiFieldMap}}
 import java.util.Map;
+import java.util.List;
 {{/if}}
 
 @ConsumerType
@@ -29,19 +30,19 @@ public interface {{interfaceName}}{
 
   {{#if isReturnTypeString}}
    {{#propertyLists}}
-    public String get{{.}}(); 
+    String get{{.}}();
    {{/propertyLists}}
   {{/if}}
 
   {{#if isReturnTypeBoolean}}
-   {{#propertyLists}}
-    public boolean is{{.}}();
-   {{/propertyLists}}
+   {{#checkboxLists}}
+     boolean is{{.}}();
+   {{/checkboxLists}}
   {{/if}}
 
   {{#if isMultiFieldMap}}
      {{#multiValueLists}}
-     public Map<String, String> getMultiField{{.}}();
+      List<Map<String, Object>> getMultiField{{.}}();
      {{/multiValueLists}}
   {{/if}}
 
