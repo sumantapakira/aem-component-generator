@@ -52,3 +52,35 @@ If you are using bnd-maven-plugin then add it as follows:
                 <version>1.18.2</version>
                 <scope>compile</scope>
             </dependency>
+            
+ 6. Add this project as embed package in your own project for additional feature like place holder text and Multifield implementation
+ 
+ In your pom.xml file first add this
+ 
+                      <embedded>
+                            <groupId>com.github.sumantapakira.aem-component-generator</groupId>
+                            <artifactId>component-generator.ui.apps</artifactId>
+                            <type>zip</type>
+                            <target>/apps/<your-project>/install</target>
+                        </embedded>
+                        <embedded>
+                            <groupId>com.github.sumantapakira.aem-component-generator</groupId>
+                            <artifactId>component-generator.ui.content</artifactId>
+                            <type>zip</type>
+                            <target>/apps/<your-project>/install</target>
+                        </embedded>
+                        
+ And then add the dependencies:
+ 
+         <dependency>
+            <groupId>com.github.sumantapakira.aem-component-generator</groupId>
+            <artifactId>component-generator.ui.apps</artifactId>
+            <version>master-3670265f2a-1</version>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>com.github.sumantapakira.aem-component-generator</groupId>
+            <artifactId>component-generator.ui.content</artifactId>
+            <version>master-3670265f2a-1</version>
+            <type>zip</type>
+        </dependency>
