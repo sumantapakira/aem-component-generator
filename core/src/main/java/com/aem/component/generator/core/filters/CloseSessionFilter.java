@@ -16,7 +16,8 @@
  */
 package com.aem.component.generator.core.filters;
 
-import com.aem.component.generator.core.multifield.OpenSessionUtil;
+
+import com.tui.multifield.core.commons.OpenSessionUtil;
 import org.apache.sling.engine.EngineConstants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.propertytypes.ServiceDescription;

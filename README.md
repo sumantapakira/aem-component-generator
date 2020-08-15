@@ -1,21 +1,17 @@
-# UI Based AEM Component Generator
+# Sample AEM project template
 
- *  This is a project to help others developers like me who spends time to generate components and dialogs and creating Sling model or React components.
- *  This project also helps requirement analyst who does not have knowledge about AEM component development but still can create AEM Dialog by Drag and Drop for developers to start implementating on actual logic
- *  This project also helps Frontend developers who does not have knowledge about AEM backend component, now they can create Dialog and start implemting Frontend logic whithout waiting for Backend developers dependency.
- 
-Demo : https://youtu.be/PecIIKGGLpQ 
- 
+This is a project template for AEM-based applications. It is intended as a best-practice set of examples as well as a potential starting point to develop your own functionality.
 
-## Work in progress
+## Modules
 
-* Java Code generation
-* React Code generation
-* Design dialog creation
+The main parts of the template are:
 
-Please follow settings file on how to configure.
-
-
+* core: Java bundle containing all core functionality like OSGi services, listeners or schedulers, as well as component-related Java code such as servlets or request filters.
+* ui.apps: contains the /apps (and /etc) parts of the project, ie JS&CSS clientlibs, components, templates, runmode specific configs as well as Hobbes-tests
+* ui.content: contains sample content using the components from the ui.apps
+* ui.tests: Java bundle containing JUnit tests that are executed server-side. This bundle is not to be deployed onto production.
+* ui.launcher: contains glue code that deploys the ui.tests bundle (and dependent bundles) to the server and triggers the remote JUnit execution
+* ui.frontend: an optional dedicated front-end build mechanism (Angular, React or general Webpack project)
 
 ## How to build
 
