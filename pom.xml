@@ -742,11 +742,6 @@ Bundle-DocURL:
                 <artifactId>aem-component-generator.core</artifactId>
                 <version>1.2-SNAPSHOT</version>
             </dependency>
-            <dependency>
-                <groupId>com.github.sumantapakira.aem-multifield</groupId>
-                <artifactId>multifield.core</artifactId>
-                <version>master-dbc43663b0-1</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 

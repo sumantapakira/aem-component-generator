@@ -45,7 +45,7 @@
                             <bnd><![CDATA[
 Import-Package: javax.annotation;version=0.0.0,*
                                 ]]>
-                                -includeresource: handlebars.jar=handlebars-4.2.0.jar,tui-multifield.jar=multifield.core-master-dbc43663b0-1.jar;lib:=true,
+                                -includeresource: handlebars.jar=handlebars-4.2.0.jar;lib:=true,
                                  Export-Package:com.aem.component.generator.core.*
                             </bnd>
                         </configuration>
@@ -176,11 +176,7 @@ Import-Package: javax.annotation;version=0.0.0,*
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
          </dependency>
-        <dependency>
-            <groupId>com.github.sumantapakira.aem-multifield</groupId>
-            <artifactId>multifield.core</artifactId>
-        </dependency>
-        <!-- Testing -->
+         <!-- Testing -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
