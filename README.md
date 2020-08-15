@@ -11,6 +11,8 @@ Demo Part-1 : https://youtu.be/PecIIKGGLpQ
 
 * Design dialog creation
 
+## Get Started
+
 Please follow [settings](https://github.com/sumantapakira/aem-component-generator/blob/master/settings.md) and [How to configure](https://github.com/sumantapakira/aem-component-generator/blob/master/development.md) file to get started.
 
 
