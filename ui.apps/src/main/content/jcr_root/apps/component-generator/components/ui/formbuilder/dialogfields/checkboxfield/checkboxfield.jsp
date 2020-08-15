@@ -12,8 +12,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
---%>
-<%
+
 %><%@include file="/libs/granite/ui/global.jsp" %><%
 %><%@ page session="false" contentType="text/html" pageEncoding="utf-8"
          import="com.adobe.granite.ui.components.formbuilder.FormResourceManager,
@@ -40,3 +39,4 @@
 %>
 <coral-icon class="delete-field" icon="delete" size="L" tabindex="0" role="button" alt="<%= xssAPI.encodeForHTMLAttr(i18n.get("Delete")) %>" data-target-id="<%= xssAPI.encodeForHTMLAttr(key) %>"></coral-icon>
 </div>
+
