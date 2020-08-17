@@ -86,5 +86,10 @@ If you are using bnd-maven-plugin then add it as follows:
         </dependency>
         
 7. This is a temporary solution, please install this [JAR](https://repo1.maven.org/maven2/com/github/jknack/handlebars/4.2.0/handlebars-4.2.0.jar) from maven repo directly in System console. https://mvnrepository.com/artifact/com.github.jknack/handlebars/4.2.0        
-    
+I will make it as part of build process soon. 
+
+
+Note: Restart AEM server if you see this error in log file: 
+*ERROR* [0:0:0:0:0:0:0:1 [1597653713267] GET /apps/cq/core/content/nav/tools/component-generator/component-generator/componentlist.html HTTP/1.1] org.apache.sling.engine.impl.SlingRequestProcessorImpl service: Uncaught SlingException
+org.apache.sling.scripting.jsp.jasper.JasperException: Unable to compile class for JSP: 
         
