@@ -84,3 +84,7 @@ If you are using bnd-maven-plugin then add it as follows:
             <version>master-3670265f2a-1</version>
             <type>zip</type>
         </dependency>
+        
+7. This is a temporary solution, please install this [JAR](https://repo1.maven.org/maven2/com/github/jknack/handlebars/4.2.0/handlebars-4.2.0.jar) from maven repo directly in System console. https://mvnrepository.com/artifact/com.github.jknack/handlebars/4.2.0        
+    
+        
