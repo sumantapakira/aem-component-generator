@@ -1,4 +1,4 @@
-# UI Based AEM Component Generator
+# AEM Component Generator
 
  *  This is a project to help others developers like me who spends time to generate components and dialogs and creating Sling model or React components.
  *  This project also helps requirement analyst who does not have knowledge about AEM component development but still can create AEM Dialog by Drag and Drop for developers to start implementating on actual logic
