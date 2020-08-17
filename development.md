@@ -75,13 +75,13 @@ If you are using bnd-maven-plugin then add it as follows:
          <dependency>
             <groupId>com.github.sumantapakira.aem-component-generator</groupId>
             <artifactId>component-generator.ui.apps</artifactId>
-            <version>master-3670265f2a-1</version>
+            <version>v1.0</version>
             <type>zip</type>
         </dependency>
         <dependency>
             <groupId>com.github.sumantapakira.aem-component-generator</groupId>
             <artifactId>component-generator.ui.content</artifactId>
-            <version>master-3670265f2a-1</version>
+            <version>v1.0</version>
             <type>zip</type>
         </dependency>
         
