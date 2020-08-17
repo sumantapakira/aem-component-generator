@@ -24,6 +24,9 @@
      {{#propertyLists}}
         <div data-sly-test="${model.{{.}} }"> ${model.{{.}} } </div>
      {{/propertyLists}}
+     {{#checkboxLists}}
+             <div data-sly-test="${model.{{.}} }"> ${model.{{.}} } </div>
+          {{/checkboxLists}}
      {{#multiValueLists}}
              <ul data-sly-list="${ model.multiField{{.}} }">
                    {{#multiFieldItemLists}}

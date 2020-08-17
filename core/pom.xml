@@ -45,7 +45,7 @@
                             <bnd><![CDATA[
 Import-Package: javax.annotation;version=0.0.0,*
                                 ]]>
-                                -includeresource: handlebars.jar=handlebars-4.2.0.jar,tui-multifield.jar=multifield.core-master-dbc43663b0-1.jar;lib:=true,
+                                -includeresource: tui-multifield.jar=multifield.core-master-dbc43663b0-1.jar;lib:=true,
                                  Export-Package:com.aem.component.generator.core.*
                             </bnd>
                         </configuration>
@@ -101,6 +101,10 @@ Import-Package: javax.annotation;version=0.0.0,*
          <dependency>
             <groupId>com.github.jknack</groupId>
             <artifactId>handlebars</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jknack</groupId>
+            <artifactId>handlebars-guava-cache</artifactId>
         </dependency>
         <dependency>
             <groupId>org.osgi</groupId>

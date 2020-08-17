@@ -738,6 +738,11 @@ Bundle-DocURL:
                 <version>4.2.0</version>
             </dependency>
             <dependency>
+                <groupId>com.github.jknack</groupId>
+                <artifactId>handlebars-guava-cache</artifactId>
+                <version>4.2.0</version>
+            </dependency>
+            <dependency>
                 <groupId>com.github.sumantapakira.aem-multifield</groupId>
                 <artifactId>multifield.core</artifactId>
                 <version>master-dbc43663b0-1</version>

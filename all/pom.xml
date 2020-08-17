@@ -191,5 +191,5 @@
             <artifactId>core.wcm.components.config</artifactId>
             <type>zip</type>
         </dependency>
-    </dependencies>
+       </dependencies>
 </project>

@@ -73,6 +73,11 @@
                             <artifactId>component-generator.core</artifactId>
                             <target>/apps/component-generator/install</target>
                         </embedded>
+                        <embedded>
+                            <groupId>com.github.jknack</groupId>
+                            <artifactId>handlebars</artifactId>
+                            <target>/apps/component-generator/install</target>
+                        </embedded>
                     </embeddeds>
                     <subPackages>
                     </subPackages>
@@ -134,7 +139,10 @@
             <version>${project.version}</version>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.github.jknack</groupId>
+            <artifactId>handlebars</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.adobe.cq</groupId>
