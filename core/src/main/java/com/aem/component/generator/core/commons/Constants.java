@@ -20,6 +20,7 @@ public class Constants {
     public static final String DEFAULT_LOCAL_ADMIN_USER_NAME = "admin";
     public static final String DEFAULT_LOCAL_ADMIN_USER_PASSWORD = "admin";
     public static final String FORWARD_SLASH = "/";
+    public static final String BACK_SLASH = "\\";
     public static final String UNDERSCORE = "_";
     public static final String VAR_SETTING_NODE = "/var/component-generator/settings";
     public static final String DOT = ".";

@@ -166,7 +166,14 @@ public class Utils {
      * @return
      */
     private static String getPackageName(String folderPath) {
-        return StringUtils.substringAfter(folderPath, "main/java/").replaceAll(Constants.FORWARD_SLASH, Constants.DOT);
+        String osName= whichOS();
+        if((osName.indexOf("win") >= 0)){
+            return StringUtils.substringAfter(folderPath, "\\main\\java\\").replace(Constants.BACK_SLASH, Constants.DOT);
+        }else if((osName.indexOf("mac") >= 0)){
+            return StringUtils.substringAfter(folderPath, "main/java/").replaceAll(Constants.FORWARD_SLASH, Constants.DOT);
+        }else{
+            return StringUtils.EMPTY;
+        }
     }
 
     /**
@@ -522,6 +529,10 @@ public class Utils {
         String folderPath = findDirectoriesWithSameName("model", rootDir);
         return StringUtils.isEmpty(folderPath) ? rootDir.getPath() : folderPath;
 
+    }
+
+    private static String whichOS(){
+        return System.getProperty("os.name").toLowerCase();
     }
 
 }
