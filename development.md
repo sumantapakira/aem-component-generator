@@ -89,7 +89,7 @@ If you are using bnd-maven-plugin then add it as follows:
         
 7. You have ACS Commons package installed because this is to [ensure permission](https://adobe-consulting-services.github.io/acs-aem-commons/features/ensure-service-users/index.html) . 
 
-8. If you are using AEM version less than 6.5 then change version to 1.8.0 version https://mvnrepository.com/artifact/org.osgi/org.osgi.framework/1.8.0 to this location https://github.com/sumantapakira/aem-component-generator/blob/master/pom.xml#L602
+8. If you are using AEM version less than 6.5 then change version to 1.8.0 version https://mvnrepository.com/artifact/org.osgi/org.osgi.framework/1.8.0 to this location https://github.com/sumantapakira/aem-component-generator/blob/master/pom.xml#L588
 
 Note: Restart AEM server if you see this error in log file: 
 *ERROR* [0:0:0:0:0:0:0:1 [1597653713267] GET /apps/cq/core/content/nav/tools/component-generator/component-generator/componentlist.html HTTP/1.1] org.apache.sling.engine.impl.SlingRequestProcessorImpl service: Uncaught SlingException
