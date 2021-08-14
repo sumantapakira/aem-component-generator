@@ -57,7 +57,7 @@ import java.util.concurrent.*;
 
 
 @Component(service = Servlet.class, property = {"sling.servlet.methods=" + HttpConstants.METHOD_GET,
-        "sling.servlet.paths=" + "/bin/zeiss/servlets/createpage", "sling.servlet.extensions=html" })
+        "sling.servlet.paths=" + "/bin/test/servlets/createpage", "sling.servlet.extensions=html" })
 public class CreatePages extends SlingAllMethodsServlet {
 
     private static final Logger LOG = LoggerFactory.getLogger(CreatePages.class);
